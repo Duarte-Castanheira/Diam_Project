@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'jogador.apps.JogadorConfig',
     'jogos.apps.JogosConfig',
     'extras.apps.ExtrasConfig',
+    'autenticacao.apps.AutenticacaoConfig',
     'rest_framework',
     'corsheaders'
 ]
