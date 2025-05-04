@@ -1,13 +1,11 @@
-import { useNavigate } from "react-router-dom";
 
 function Header() {
-    const navigate = useNavigate();
-    
+
     return (
         <>
-            <div>
+            <div className="Header">
                 <img
-                    src="/logo.png" alt="Logo Image" style={{ width: '25%', height: 'auto' }}
+                    src="/logo.png" alt="Logotipo do clube" style={{ width: '15%', height: 'auto' }}
                 />
                 
             <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center', marginTop: '10px' }}>
