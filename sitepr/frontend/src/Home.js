@@ -1,11 +1,13 @@
 import Header from "./Header";
 import Footer from "./Footer";
+import Body from "./Body"
 import {Container, Row, Col} from "reactstrap";
 
 function Home() {
     return (
         <>
             <Header />
+            <Body />
             <Content />
             <Footer />
         </>

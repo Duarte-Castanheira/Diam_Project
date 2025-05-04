@@ -1,22 +1,16 @@
-
 function Footer() {
-    const footer = document.createElement('footer');
-    footer.style.backgroundColor = '#333';
-    footer.style.color = '#fff';
-    footer.style.textAlign = 'center';
-    footer.style.padding = '10px 0';
-    footer.style.position = 'fixed';
-    footer.style.bottom = '0';
-    footer.style.width = '100%';
-    
-    const footerText = document.createElement('p');
-    footerText.textContent = '© 2023 - Todos os direitos reservados';
-    footer.appendChild(footerText);
-
-    document.body.appendChild(footer);
+    return (
+        <div className="footer">
+            <div style={{ display: 'flex', textAlign: 'right', fontWeight: 'bold', flexDirection: 'column', alignItems: 'flex-end' }}>
+                <h3>Redes sociais</h3>
+                <a href='/' style={{ textDecoration: 'none', color: 'black', fontSize: '15px'}}> Instagram</a>
+                <a href='/' style={{ textDecoration: 'none', color: 'black', fontSize: '15px'}}>X</a>
+                <a href='/' style={{ textDecoration: 'none', color: 'black', fontSize: '15px'}}>Facebook</a>
+               <a href='/' style={{ textDecoration: 'none', color: 'black', fontSize: '15px'}}>Youtube</a>
+            </div>
+            <h3>© 2025 GD Estrela do Minho. Todos os direitos reservados</h3>
+        </div>
+    );
 }
-
-// Chame a função para criar o footer ao carregar a página
-window.onload = Footer;
 
 export default Footer;

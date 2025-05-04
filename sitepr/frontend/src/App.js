@@ -4,8 +4,8 @@ import Home from './Home';
 function App() {
   return (
      <Routes>
-      <Route path="/" element={<Home />} />
-
+        <Route path="/" element={<Home />} />
+        <Route path="/jogo" element={<Home />} />
 
     </Routes>
   );
