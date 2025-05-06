@@ -1,0 +1,31 @@
+.header {
+    background-color: #f8f9fa; /* Cor de fundo clara */
+    display: flex; /* Utiliza flexbox para organizar os itens */
+    align-items: center; /* Alinha itens verticalmente no centro */
+    justify-content: space-between; /* Espaça itens igualmente ao longo do container */
+    padding: 0 20px; /* Adiciona espaçamento interno horizontal */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Adiciona leve sombra para destaque */
+}
+
+.header a {
+    color: #333; /* Cor do texto dos links */
+    text-decoration: none; /* Remove o sublinhado padrão */
+    margin: 0 15px; /* Espaçamento entre os links */
+    font-weight: 500; /* Peso da fonte */
+}
+
+.header a:hover {
+    text-decoration: underline; /* Adiciona sublinhado no hover */
+    color: #007bff; /* Muda a cor no hover */
+}
+
+.header .logo {
+    font-size: 1.5em; /* Define um tamanho maior para o logo */
+    font-weight: bold; /* Torna o texto do logo mais robusto */
+    color: #007bff; /* Cor do logo */
+}
+
+.header .menu {
+    display: flex; /* Organiza os itens do menu horizontalmente */
+    align-items: center; /* Garante alinhamento vertical */
+}
