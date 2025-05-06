@@ -1,8 +1,8 @@
 .header {
     background-color: #f8f9fa; /* Cor de fundo clara */
     display: flex; /* Utiliza flexbox para organizar os itens */
-    align-items: center; /* Alinha itens verticalmente no centro */
-    justify-content: space-between; /* Espaça itens igualmente ao longo do container */
+    align-items: center; /* Alinha itens horizontalmente no centro */
+    justify-content: center; /* Alinha itens verticalmente no centro */
     padding: 0 20px; /* Adiciona espaçamento interno horizontal */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Adiciona leve sombra para destaque */
 }
@@ -12,20 +12,41 @@
     text-decoration: none; /* Remove o sublinhado padrão */
     margin: 0 15px; /* Espaçamento entre os links */
     font-weight: 500; /* Peso da fonte */
+    align-items: center;
 }
 
-.header a:hover {
-    text-decoration: underline; /* Adiciona sublinhado no hover */
-    color: #007bff; /* Muda a cor no hover */
+
+.body {
+    font-family: emoji;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 10px; /* Aumenta a margem superior para maior afastamento */
 }
 
-.header .logo {
-    font-size: 1.5em; /* Define um tamanho maior para o logo */
-    font-weight: bold; /* Torna o texto do logo mais robusto */
-    color: #007bff; /* Cor do logo */
+.body a {
+    text-decoration: none;
+    color: black;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
 }
 
-.header .menu {
-    display: flex; /* Organiza os itens do menu horizontalmente */
-    align-items: center; /* Garante alinhamento vertical */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.footer {
+    margin-top: auto;
+    text-align: center;
+    padding: 20px;
+    background-color: #f1f1f1;
+    font-size: 14px;
 }
