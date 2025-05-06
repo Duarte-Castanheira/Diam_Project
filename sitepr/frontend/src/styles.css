@@ -2,7 +2,7 @@
     background-color: #f8f9fa; /* Cor de fundo clara */
     display: flex; /* Utiliza flexbox para organizar os itens */
     align-items: center; /* Alinha itens horizontalmente no centro */
-    justify-content: right; /* Alinha itens verticalmente no centro */
+    justify-content: center; /* Alinha itens verticalmente no centro */
     padding: 0 20px; /* Adiciona espaçamento interno horizontal */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Adiciona leve sombra para destaque */
 }
