@@ -1,5 +1,5 @@
 .header {
-    background-color: #f8f9fa; /* Cor de fundo clara */
+    background-color: white; /* Cor de fundo clara */
     display: flex; /* Utiliza flexbox para organizar os itens */
     align-items: center; /* Alinha itens horizontalmente no centro */
     justify-content: center; /* Alinha itens verticalmente no centro */
@@ -32,10 +32,6 @@
     align-items: center;
 }
 
-html, body {
-    height: 100%;
-    margin: 0;
-}
 
 #root {
     display: flex;

@@ -5,7 +5,7 @@ function Header() {
         <>
             <div className="header">
                 <a href="/"><img
-                    src="/logo.png" alt="Logotipo do clube" style={{ width: '15%', height: 'auto' }}
+                    src="/logo.png" alt="Logotipo do clube" style={{ width: '20%', height: 'auto' }}
                 /></a>
                 <a href="/jogos" style={{ textDecoration: 'none', color: 'black', fontSize: '18px' }}>Jogos</a>
             <a href="/equipa" style={{ textDecoration: 'none', color: 'black', fontSize: '18px' }}>Equipa</a>
