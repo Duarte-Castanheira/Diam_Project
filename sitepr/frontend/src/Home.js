@@ -1,6 +1,8 @@
 import Header from "./Header";
 import Footer from "./Footer";
-import Body from "./Body"
+import Body from "./Body";
+import Sobre from "./Sobre";
+import Noticias from "./Noticias";
 import {Container, Row, Col} from "reactstrap";
 
 function Home() {
