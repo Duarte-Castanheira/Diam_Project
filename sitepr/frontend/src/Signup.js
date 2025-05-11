@@ -1,50 +1,70 @@
 import React, { useState } from 'react';
-import './styles.css';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Signup({ onClose }) {
-  const [form, setForm] = useState({
-    nome: '',
-    nascimento: '',
-    telemovel: '',
-    email: '',
-    password: ''
-  });
+    const [form, setForm] = useState({
+        nome: '',
+        nascimento: '',
+        telemovel: '',
+        email: '',
+        password: '',
+    });
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const navigate = useNavigate();
+    const SIGNUP_URL = 'http://127.0.0.1:8000/autenticacao/api/signup/';
 
-  const [confirmPassword, setConfirmPassword] = useState('');
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    if (name === "confirmPassword") {
-      setConfirmPassword(value);
-    } else {
-      setForm({ ...form, [name]: value });
-    }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (form.password !== confirmPassword) {
-      alert("As passwords não coincidem!");
-      return;
-    } else {
-        alert("Conta criada com sucesso!");
+    function getCSRFToken() {
+        return document.cookie.split('; ').find(row => row.startsWith('csrftoken='))?.split('=')[1];
     }
 
-    // Aqui podes meter um axios/post para enviar para o backend
-    onClose();
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setForm({ ...form, [name]: value });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (form.password !== confirmPassword) {
+            alert("As passwords não coincidem!");
+            return;
+        }
+
+        try {
+      await axios.post(SIGNUP_URL, {
+        username: form.nome,
+        password: form.password,
+        email: form.email,
+        nascimento: form.nascimento,
+        telemovel: form.telemovel,
+      }, {
+        headers: {
+          'X-CSRFToken': getCSRFToken()
+        },
+        withCredentials: true
+      });
+       alert('Registo realizado com sucesso!');
+      setForm({ nome: '', nascimento: '', telemovel: '', email: '', password: '' });
+      setConfirmPassword('');
+      navigate('/perfil');
+      onClose();
+    } catch (error) {
+      console.error('Erro no signup:', error);
+      alert('Falha no registo. Verifica os dados.');
+    }
   };
 
   return (
     <div className="modal-overlay">
       <div className="modal-content">
         <form onSubmit={handleSubmit}>
-        <h2>Regista-te</h2>
+          <h2>Regista-te</h2>
           <div>
-            <label>Nome:</label>
+            <label>Username:</label>
             <input type="text" name="nome" value={form.nome} onChange={handleChange} required />
           </div>
-          <div style={{position:'relative', right:'12px'}}>
+          <div style={{ position: 'relative', right: '12px' }}>
             <label>Data de nascimento:</label>
             <input type="date" name="nascimento" value={form.nascimento} onChange={handleChange} required />
           </div>
@@ -62,7 +82,7 @@ function Signup({ onClose }) {
           </div>
           <div>
             <label>Confirmar Password:</label>
-            <input type="password" name="confirmPassword" value={confirmPassword} onChange={handleChange} required />
+            <input type="password" name="confirmPassword" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
           </div>
           <button type="submit">Registar</button>
         </form>

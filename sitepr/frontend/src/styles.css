@@ -189,3 +189,13 @@ form button:hover {
 .modal-content button:hover {
   background-color: #8fd3ba;
 }
+
+.perfil button {
+  margin: 1rem;
+  padding: 0.6rem 1.2rem;
+  background-color: #016c40;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}

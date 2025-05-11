@@ -4,41 +4,43 @@ import Signup from './Signup';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+
 function Login() {
   const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
   const [showSignup, setShowSignup] = useState(false);
-
+  const LOGIN_URL = 'http://localhost:8000/autenticacao/api/login/';
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
 
-    try {
-      const response = await axios.post('http://localhost:8000/autenticacao/api/login/', {
-        username: user,
-        password: password,
-      },
-       { withCredentials: true });
+  function getCSRFToken() {
+    return document.cookie.split('; ').find(row => row.startsWith('csrftoken='))?.split('=')[1];
+  }
 
-      console.log('Login bem-sucedido:', response.data);
-
-      // Redireciona para /perfil
-      navigate('/perfil');
-    } catch (error) {
-      if (error.response) {
-        console.error('Erro no login:', error.response.data.message);
-      } else {
-        console.error('Erro de rede:', error.message);
-      }
-    }
-  };
+  const handleLogin = (e) => {
+  e.preventDefault();
+  axios.post(LOGIN_URL, {
+    username: user,
+    password: password
+  }, {
+    headers: {
+      'X-CSRFToken': getCSRFToken()
+    },
+    withCredentials: true
+  })
+    .then(() => {
+      setUser(''); // Limpa os campos
+      setPassword('');
+      navigate('/perfil'); // Navega só após login com sucesso
+    })
+    .catch(err => console.error('Login failed:', err));
+};
 
   return (
     <div className="login">
       <img src="/perfil_clube.png" alt="Logotipo do clube" className="logo-clube" />
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleLogin}>
         <div>
           <label>Username:</label>
           <input
@@ -55,7 +57,7 @@ function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="submit">Login</button><br />
+        <button type="submit" onClick={handleLogin}>Login</button><br />
         <h3>Não tens conta?</h3>
         <button type="button" onClick={() => setShowSignup(true)}>SignUp</button>
       </form>
