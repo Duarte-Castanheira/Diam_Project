@@ -39,7 +39,7 @@ function Forms() {
 
     try {
       await axios.put(`http://localhost:8000/forms/api/option/${optionId}`, updatedOption);
-      alert("Voto registado!");
+
 
       // Atualiza o estado para refletir o voto
       setQuestions(prev =>
