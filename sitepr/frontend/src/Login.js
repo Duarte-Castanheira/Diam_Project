@@ -12,7 +12,6 @@ function Login() {
   const LOGIN_URL = 'http://localhost:8000/autenticacao/api/login/';
   const navigate = useNavigate();
 
-
   function getCSRFToken() {
     return document.cookie.split('; ').find(row => row.startsWith('csrftoken='))?.split('=')[1];
   }

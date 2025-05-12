@@ -12,13 +12,13 @@ const Profile = () => {
   const getUser = () => {
     axios.get(USER_URL, { withCredentials: true })
       .then(res => {
-        setUser(res.data.username);
-        setLoading(false);  // Acabamos de carregar a informação
+        setUser(res.data);
+        setLoading(false);
       })
       .catch(err => {
         console.error('Failed to get user:', err);
         setUser(null);
-        setLoading(false);  // Mesmo quando falha, acabamos de carregar
+        setLoading(false);
       });
   };
 
@@ -27,7 +27,6 @@ const Profile = () => {
   }, []);
 
   useEffect(() => {
-    // Só redirecionamos se o loading for falso e não houver user
     if (!loading && !user) {
       navigate('/login');
     }
@@ -45,7 +44,8 @@ const Profile = () => {
       withCredentials: true
     })
       .then(() => {
-        setUser(null);  // Limpa o estado do utilizador
+        setUser(null);
+        navigate('/login');
       })
       .catch(err => console.error('Logout failed:', err));
   };
@@ -54,12 +54,14 @@ const Profile = () => {
 
   return (
     <div className="perfil">
-      <h2>O meu perfil</h2>
-      <p>Username: {user}</p>
-
-      <button onClick={handleLogout}>Logout</button>
-    </div>
-  );
+        <h2>O meu perfil</h2>
+        <p>Username: {user?.username}</p>
+        <p>Email: {user?.email || "não disponível"}</p>
+        <p>Telemóvel: {user?.telemovel || "não disponível"}</p>
+        <p>Data de nascimento: {user?.nascimento || "não disponível"}</p>
+        <button onClick={handleLogout}>Logout</button>
+        </div>
+    );
 };
 
 export default Profile;

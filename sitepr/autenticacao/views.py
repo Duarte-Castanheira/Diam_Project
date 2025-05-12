@@ -47,6 +47,7 @@ def login_view(request):
 @api_view(['GET'])
 def logout_view(request):
     logout(request)
+    request.session.flush()
     response = Response({'message': 'Logged out successfully'})
     response.delete_cookie('sessionid')  # força a remoção do cookie
     return response
@@ -54,7 +55,7 @@ def logout_view(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def user_view(request):
-    return Response({'username': request.user.username})
+    return Response({'username': request.user.username, 'email': request.user.email, 'telemovel': request.user.telemovel, 'nascimento': request.user.nascimento,})
 
 @api_view(['GET', 'PUT'])
 @permission_classes([IsAuthenticated])

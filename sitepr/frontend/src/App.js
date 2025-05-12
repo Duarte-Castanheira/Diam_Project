@@ -7,7 +7,7 @@ import Sobre from './Sobre';
 import Noticias from './Noticias';
 import Perfil from './Perfil';
 import Login from './Login';
-
+import Equipa from './Equipa';
 
 function App() {
   return (
@@ -20,6 +20,7 @@ function App() {
         <Route path="/noticias" element={<Noticias />} />
         <Route path="/perfil" element={<Perfil />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/equipa" element={<Equipa />} />
       </Routes>
       <Footer />
     </>

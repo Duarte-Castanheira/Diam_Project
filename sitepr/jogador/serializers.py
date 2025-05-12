@@ -5,9 +5,9 @@ from .models import Estatistica, Jogador
 class EstatisticasSerializer(serializers.ModelSerializer):
     class Meta:
         model = Estatistica
-        fields = ('pk', 'golos', 'assistencias')
+        fields = ('pk', 'golos', 'assistencias', 'numero_jogos', 'cartoes_amarelos', 'cartoes_vermelhos')
 
 class JogadorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Jogador
-        fields = ('pk', 'nome', 'numero', 'data_nascimento', 'imagem', 'stats')
+        fields = ('pk', 'nome', 'numero', 'data_nascimento', 'imagem','nacionalidade','valor_mercado', 'stats')
