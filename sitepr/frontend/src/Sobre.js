@@ -1,11 +1,8 @@
-import Header from "./Header";
-import Footer from "./Footer";
 import './styles.css';
 
 function Sobre() {
     return (
         <div className ='Sobre'>
-            <Header />
             <h3>Descrição:</h3>
             <ul>
             <li>Nome: Grupo Desportivo Estrela do Minho (G.D. Estrela do Minho)</li>
@@ -39,7 +36,6 @@ function Sobre() {
             <ul>
             <p>"Orgulho do Minho, força do povo."</p>
             </ul>
-            <Footer />
         </div>
     );
 }
