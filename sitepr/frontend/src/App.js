@@ -5,7 +5,8 @@ import Header from './Header';
 import Footer from './Footer';
 import Sobre from './Sobre';
 import Noticias from './Noticias';
-import politica_privacidade from './politica_privacidade';
+import Perfil from './Perfil';
+import Login from './Login';
 
 
 function App() {
@@ -14,10 +15,11 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/noticias" element={<Noticias />} />
-        <Route path="/sobre" element={<Sobre />} />
         <Route path="/candidatar" element={<Forms />} />
-        <Route path="/politica_privacidade" element={<politica_privacidade />} />
+        <Route path="/sobre" element={<Sobre />} />
+        <Route path="/noticias" element={<Noticias />} />
+        <Route path="/perfil" element={<Perfil />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
       <Footer />
     </>

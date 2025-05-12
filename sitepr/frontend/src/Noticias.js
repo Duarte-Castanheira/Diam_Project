@@ -1,4 +1,3 @@
-
 import './styles.css';
 
 function Noticias() {

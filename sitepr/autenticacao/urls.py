@@ -7,5 +7,6 @@ urlpatterns = [
     path("api/login/", views.login_view),
     path("api/logout/", views.logout_view),
     path("api/user/", views.user_view),
+    #path("api/profile/", views.profile_view)
 
     ]

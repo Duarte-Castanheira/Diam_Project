@@ -1,24 +1,44 @@
 import './styles.css'
+import React, { useState } from 'react';
+
 function Header() {
+  const [mostrarBotoes, setMostrarBotoes] = useState(false);
 
-    return (
-        <>
-            <div className="header">
-                <a href="/"><img
-                    src="/logo.png" alt="Logotipo do clube" style={{ width: '20%', height: 'auto' }}
-                /></a>
-                <a href="/jogos" style={{ textDecoration: 'none', color: 'black', fontSize: '18px' }}>Jogos</a>
-            <a href="/equipa" style={{ textDecoration: 'none', color: 'black', fontSize: '18px' }}>Equipa</a>
-            <a href="/bilhetes" style={{ textDecoration: 'none', color: 'black', fontSize: '18px' }}>Bilhetes</a>
-            <a href="/loja" style={{ textDecoration: 'none', color: 'black', fontSize: '18px' }}>Loja</a>
-            <a href="/noticias" style={{ textDecoration: 'none', color: 'black', fontSize: '18px' }}>Noticias</a>
-            <a href="/candidatar" style={{ textDecoration: 'none', color: 'black', fontSize: '18px' }}>Candidatar</a>
-            <a href="/sobre" style={{ textDecoration: 'none', color: 'black', fontSize: '18px' }}>Sobre</a>
-                
 
-            </div>
-        </>
-    );
+
+  const toggleBotoes = (e) => {
+    e.preventDefault(); // Impede o link de redirecionar
+    setMostrarBotoes(prev => !prev);
+  };
+
+  return (
+    <div className="header">
+  <a className="logo-link" href="/" >
+    <img src="/logo.png" alt="Logotipo do clube" />
+  </a>
+
+  <div className="navbar">
+    <a href="/jogos">Jogos</a>
+    <a href="/equipa">Equipa</a>
+    <a href="/bilhetes">Bilhetes</a>
+    <a href="/loja">Loja</a>
+    <a href="/noticias">Notícias</a>
+    <a href="/sobre">Sobre</a>
+    <div className="nav-item-com-botoes">
+        <a href="/" onClick={toggleBotoes}>Formulários</a>
+        {mostrarBotoes && (
+        <div className="botoes-container">
+          <a href="/candidatar">Candidatar</a>
+          <a href="/inquerito">Inquérito</a>
+        </div>
+        )}
+    </div>
+    <a href="/perfil">
+        <img src="/perfil.png" alt="Perfil" style={{ width: '30px', height: 'auto' }} />
+    </a>
+  </div>
+</div>
+  );
 }
 
 export default Header;
