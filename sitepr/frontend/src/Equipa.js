@@ -16,14 +16,15 @@ function Equipa() {
         }, []);
 
     return(
-        <Table>
+        <Table className="table">
           <tbody>
             {playerList.map((p) => (
               <tr key={p.pk}>
-                <td>{p.imagem}</td>
+
                 <td>{p.nome}</td>
-                <td>{p.numero}</td>
+                <td><img src={`http://localhost:8000${p.nacionalidade}`} alt={p.nome} height="30" /></td>
                 <td>{p.data_nascimento}</td>
+                <td>{p.numero}</td>
                 <td>{p.stats}</td>
               </tr>
             ))}

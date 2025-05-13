@@ -8,6 +8,9 @@ class ProdutoLoja(models.Model):
     stock = models.IntegerField(default=0)
     imagem = models.ImageField(upload_to='Produtos/', null=True, blank=True)
 
+    def __str__(self):
+        return self.nome
+
 class Noticia(models.Model):
     titulo = models.CharField(max_length=200)
     data = models.DateField()

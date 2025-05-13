@@ -11,10 +11,7 @@ class UserSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(**validated_data)
         return user
 
-#class ProfileSerializer(serializers.ModelSerializer):
-# class Meta:
-#    model = Profile
-#    fields = ('pk', 'user')
+
 
 class CustomUserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)

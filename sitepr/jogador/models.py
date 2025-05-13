@@ -14,7 +14,7 @@ class Jogador(models.Model):
     numero = models.IntegerField(default=0)
     data_nascimento =  models.DateField()
     imagem = models.ImageField(upload_to='Jogadores/', null=True, blank=True)
-    nacionalidade = models.ImageField(upload_to='Jogadores/', null=True, blank=True)
+    nacionalidade = models.ImageField(upload_to='Bandeiras/', null=True, blank=True)
     stats = models.OneToOneField(Estatistica, on_delete=models.CASCADE)
     valor_mercado = models.IntegerField(default=0)
 
