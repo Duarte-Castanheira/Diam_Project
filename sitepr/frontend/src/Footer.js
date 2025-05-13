@@ -21,15 +21,15 @@ function Footer() {
             </div>
             <div style={{ textAlign: 'center', marginTop: '15px', fontWeight: 'bold' }}>
                 <p>
-                    <a href="/politica_privacidade" target="_blank" style={{ textDecoration: 'none', color: 'black', marginRight: '10px' }}>
+                    <a href="/PoliticaPrivacidade" target="_blank" style={{ textDecoration: 'none', color: 'black', marginRight: '10px' }}>
                         Política de Privacidade
                     </a>
                     |
-                    <a href="/termos_uso" target="_blank" style={{ textDecoration: 'none', color: 'black', margin: '0 10px' }}>
+                    <a href="/TermosUso" target="_blank" style={{ textDecoration: 'none', color: 'black', margin: '0 10px' }}>
                         Termos de Uso
                     </a>
                     |
-                    <a href="/aviso_cookies" target="_blank" style={{ textDecoration: 'none', color: 'black', marginLeft: '10px' }}>
+                    <a href="/AvisoCookies" target="_blank" style={{ textDecoration: 'none', color: 'black', marginLeft: '10px' }}>
                         Aviso de Cookies
                     </a>
                 </p>
