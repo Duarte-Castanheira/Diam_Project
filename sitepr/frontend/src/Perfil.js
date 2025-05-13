@@ -37,7 +37,7 @@ const Profile = () => {
   }
 
   const handleLogout = () => {
-    axios.get(LOGOUT_URL, {}, {
+    axios.post(LOGOUT_URL, {}, {
       headers: {
         'X-CSRFToken': getCSRFToken()
       },
