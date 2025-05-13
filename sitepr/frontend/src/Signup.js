@@ -84,7 +84,7 @@ function Signup({ onClose }) {
             <label>Confirmar Password:</label>
             <input type="password" name="confirmPassword" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
           </div>
-          <button type="submit">Registar</button>
+          <button type="submit" onClick={handleSubmit}>Registar</button>
         </form>
         <button onClick={onClose}>Fechar</button>
       </div>

@@ -12,7 +12,7 @@ import TermosUso from './TermosUso';
 import AvisoCookies from './AvisoCookies';
 import Perfil from './Perfil';
 import Login from './Login';
-
+import Equipa from './Equipa';
 
 function App() {
   return (
@@ -25,9 +25,6 @@ function App() {
         <Route path="/noticias" element={<Noticias />} />
         <Route path="/perfil" element={<Perfil />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/PoliticaPrivacidade" element={<PoliticaPrivacidade />} />
-        <Route path="/TermosUso" element={<TermosUso />} />
-        <Route path="/AvisoCookies" element={<AvisoCookies />} />
       </Routes>
       <Footer />
     </>

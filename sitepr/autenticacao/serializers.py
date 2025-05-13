@@ -4,17 +4,14 @@ from .models import CustomUser
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
-        fields = ('id', 'username', 'password', 'email', 'telemovel', 'data_nascimento','pub_data')
+        model = CustomUser
+        fields = ('id', 'username', 'password', 'email','carrinho', 'telemovel', 'data_nascimento','pub_data')
 
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
         return user
 
-#class ProfileSerializer(serializers.ModelSerializer):
-# class Meta:
-#    model = Profile
-#    fields = ('pk', 'user')
+
 
 class CustomUserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
