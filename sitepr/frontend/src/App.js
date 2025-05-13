@@ -1,4 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 import Home from './Home';
 import Forms from './Forms';
 import Header from './Header';
