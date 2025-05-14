@@ -1,63 +1,60 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './styles.css';
 import Signup from './Signup';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import axios from "axios";
-
 
 function Login() {
   const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
+  const [currentUser, setCurrentUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [showSignup, setShowSignup] = useState(false);
   const LOGIN_URL = 'http://localhost:8000/autenticacao/api/login/';
+  const USER_URL = 'http://localhost:8000/autenticacao/api/user/';
+  const LOGOUT_URL = 'http://localhost:8000/autenticacao/api/logout/';
   const navigate = useNavigate();
 
-  const getUser = () => {
+  useEffect(() => {
     axios.get(USER_URL, { withCredentials: true })
       .then(res => {
-        setUser(res.data);
-        setLoading(false);
+        setCurrentUser(res.data);
       })
-      .catch(err => {
-        console.error('Failed to get user:', err);
-        setUser(null);
-        setLoading(false);
-      });
-  };
-
-  useEffect(() => {
-    getUser();
+      .catch(() => {
+        setCurrentUser(null);
+      })
+      .finally(() => setLoading(false));
   }, []);
 
   useEffect(() => {
-    if (!loading && !user) {
+    if (!loading && !currentUser) {
       navigate('/login');
     }
-  }, [loading, user, navigate]);
+  }, [loading, currentUser, navigate]);
 
   function getCSRFToken() {
     return document.cookie.split('; ').find(row => row.startsWith('csrftoken='))?.split('=')[1];
   }
 
   const handleLogin = (e) => {
-  e.preventDefault();
-  axios.post(LOGIN_URL, {
-    username: user,
-    password: password
-  }, {
-    headers: {
-      'X-CSRFToken': getCSRFToken()
-    },
-    withCredentials: true
-  })
-    .then(() => {
-      setUser(''); // Limpa os campos
-      setPassword('');
-      navigate('/perfil'); // Navega só após login com sucesso
+    e.preventDefault();
+    axios.post(LOGIN_URL, {
+      username: user,
+      password: password
+    }, {
+      headers: {
+        'X-CSRFToken': getCSRFToken()
+      },
+      withCredentials: true
     })
-    .catch(err => console.error('Login failed:', err));
-};
+      .then(() => {
+        setUser('');
+        setPassword('');
+        navigate('/perfil');
+      })
+      .catch(err => console.error('Login failed:', err));
+  };
+
   const handleLogout = () => {
     axios.post(LOGOUT_URL, {}, {
       headers: {
@@ -66,28 +63,26 @@ function Login() {
       withCredentials: true
     })
       .then(() => {
-        setUser(null);
+        setCurrentUser(null);
         navigate('/login');
       })
       .catch(err => console.error('Logout failed:', err));
   };
 
-  if (loading) return <p>A verificar sessão...</p>;  // Exibe enquanto estamos a carregar os dados
+  if (loading) return <p>A verificar sessão...</p>;
 
-  return (
+  return currentUser ? (
     <div className="perfil">
-        <h2>O meu perfil</h2>
-        <p>Username: {user?.username}</p>
-        <p>Email: {user?.email || "não disponível"}</p>
-        <p>Telemóvel: {user?.telemovel || "não disponível"}</p>
-        <p>Data de nascimento: {user?.nascimento || "não disponível"}</p>
-        <button onClick={handleLogout}>Logout</button>
-        </div>
-    );
-};
+      <h2>O meu perfil</h2>
+      <p>Username: {currentUser?.username}</p>
+      <p>Email: {currentUser?.email || "não disponível"}</p>
+      <p>Telemóvel: {currentUser?.telemovel || "não disponível"}</p>
+      <p>Data de nascimento: {currentUser?.nascimento || "não disponível"}</p>
+      <button onClick={handleLogout}>Logout</button>
+    </div>
+  ) : (
     <div className="login">
       <img src="/perfil_clube.png" alt="Logotipo do clube" className="logo-clube" />
-
       <form onSubmit={handleLogin}>
         <div>
           <label>Username:</label>
@@ -105,11 +100,10 @@ function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="submit" onClick={handleLogin}>Login</button><br />
+        <button type="submit">Login</button><br />
         <h3>Não tens conta?</h3>
         <button type="button" onClick={() => setShowSignup(true)}>SignUp</button>
       </form>
-
       {showSignup && <Signup onClose={() => setShowSignup(false)} />}
     </div>
   );
