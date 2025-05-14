@@ -40,21 +40,21 @@ function Slideshow() {
       interval={5000}
       transitionTime={500}
     >
-      <div onClick={() => navigate("/Noticias")}>
+      <div onClick={() => navigate("/Noticias")} role="button" tabIndex={0} onKeyDown={(e) => e.key === 'Enter' && navigate("/Noticias")}>
         <img
           src="/NoticiaJovem.png"
           alt="Imagem 1"
           style={{ cursor: "pointer" }}
         />
       </div>
-      <div onClick={() => navigate("/Noticias")}>
+      <div onClick={() => navigate("/Noticias")} role="button" tabIndex={0} onKeyDown={(e) => e.key === 'Enter' && navigate("/Noticias")}>
         <img
           src="/Sub17.png"
           alt="Imagem 2"
           style={{ cursor: "pointer" }}
         />
       </div>
-      <div onClick={() => navigate("/Noticias")}>
+      <div onClick={() => navigate("/Noticias")} role="button" tabIndex={0} onKeyDown={(e) => e.key === 'Enter' && navigate("/Noticias")}>
         <img
           src="/RenovacaoEstadio.png"
           alt="Imagem 3"
@@ -66,38 +66,61 @@ function Slideshow() {
 }
 
 function Games() {
-
   return (
     <>
       <h2>Acompanha os jogos do GD Estrela do Minho</h2>
       <div className="match-box">
         <div className="game-container">
           <div className="game">
-            <div className="date">Terminado<br />LIGA NORTE 24/25 | MINHO TV</div>
+            <div className="date">
+              Terminado
+              <br />
+              LIGA NORTE 24/25 | MINHO TV
+            </div>
             <div className="team" style={{ fontWeight: "bold" }}>
-              <img src="/logo.png" alt="Estrela do Minho" /> GD Estrela do Minho
+              <img src="/logo.png" alt="Estrela do Minho Logo" /> GD Estrela do Minho
             </div>
             <div className="score">1 - 1</div>
-            <div className="team"><img src="/SCCaminhense.png" alt="Sporting" /> SC Caminhense</div>
-            <a href="#">Resumo</a>
+            <div className="team">
+              <img src="/SCCaminhense.png" alt="SC Caminhense Logo" /> SC Caminhense
+            </div>
+            <a>Resumo</a>
           </div>
+        </div>
 
+        <div className="game-container">
           <div className="game">
-            <div className="date">Sáb 2 Fev, 18h00<br />LIGA NORTE 24/25 | MINHO TV</div>
-            <div className="team"><img src="/Melgaco.png" alt="CDC Melgaço" /> CDC Melgaço</div>
+            <div className="date">
+              Sáb 2 Fev, 18h00
+              <br />
+              LIGA NORTE 24/25 | MINHO TV
+            </div>
+            <div className="team">
+              <img src="/Melgaco.png" alt="CDC Melgaço Logo" /> CDC Melgaço
+            </div>
             <div className="score">vs</div>
-            <div className="team"style={{ fontWeight: "bold" }}>
-            <img src="/logo.png" alt="Estrela do Minho" /> GD Estrela do Minho</div>
-            <a href="#">Antevisão</a> | <a href="#">Apostar Betano</a>
+            <div className="team" style={{ fontWeight: "bold" }}>
+              <img src="/logo.png" alt="Estrela do Minho Logo" /> GD Estrela do Minho
+            </div>
+            <a>Antevisão</a> | <a>Comprar Bilhete</a>
           </div>
+        </div>
 
+        <div className="game-container">
           <div className="game">
-            <div className="date">Dom 25 Mai, 17h15<br />LIGA NORTE 24/25 | MINHO TV</div>
-            <div className="team"style={{ fontWeight: "bold" }}>
-            <img src="/logo.png" alt="Estrela do Minho" /> GD Estrela do Minho</div>
+            <div className="date">
+              Dom 25 Mai, 17h15
+              <br />
+              LIGA NORTE 24/25 | MINHO TV
+            </div>
+            <div className="team" style={{ fontWeight: "bold" }}>
+              <img src="/logo.png" alt="Estrela do Minho Logo" /> GD Estrela do Minho
+            </div>
             <div className="score">vs</div>
-            <div className="team"><img src="/ACDLanheses.png" alt="ACD Lanheses" /> ACD Lanheses</div>
-            <a href="#">Apostar Betano</a>
+            <div className="team">
+              <img src="/ACDLanheses.png" alt="ACD Lanheses Logo" /> ACD Lanheses
+            </div>
+            <a>Comprar Bilhete</a>
           </div>
         </div>
       </div>
