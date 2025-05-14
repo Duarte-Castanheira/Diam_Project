@@ -1,74 +1,109 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Row, Col } from "reactstrap";
-import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 function Home() {
   return (
-    <>
-      <Content />
-    </>
-  );
-}
-
-function Content() {
-  return (
-    <Container style={{ marginTop: "20px", maxWidth: "400px" }}>
-      <Row>
-        <Col>
-          <Slideshow />
-        </Col>
-      </Row>
-      <Row style={{ marginTop: "20px" }}>
-        <Col>
-          <Games />
-        </Col>
-      </Row>
-    </Container>
+    <div>
+      <div>
+        <Slideshow />
+      </div>
+      <div>
+        <Games />
+      </div>
+      <div>
+        <Video />
+      </div>
+    </div>
   );
 }
 
 function Slideshow() {
+  const images = [
+    {
+      src: "/NoticiaJovem.png",
+      alt: "Imagem 1",
+      link: "/Noticias",
+    },
+    {
+      src: "/Sub17.png",
+      alt: "Imagem 2",
+      link: "/Noticias",
+    },
+    {
+      src: "/RenovacaoEstadio.png",
+      alt: "Imagem 3",
+      link: "/Noticias",
+    },
+  ];
+
+  const [currentIndex, setCurrentIndex] = useState(0);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) =>
+        prevIndex === images.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleKeyDown = (e, link) => {
+    if (e.key === "Enter") {
+      navigate(link);
+    }
+  };
+
+  const handlePrevious = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+    );
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === images.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const { src, alt, link } = images[currentIndex];
+
   return (
-    <Carousel
-      autoPlay
-      infiniteLoop
-      showThumbs={false}
-      showStatus={false}
-      interval={5000}
-      transitionTime={500}
+    <div
+      tabIndex={0}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexDirection: "column",
+        cursor: "pointer",
+        overflow: "hidden",
+      }}
+      onClick={() => navigate(link)}
     >
-      <div onClick={() => navigate("/Noticias")} role="button" tabIndex={0} onKeyDown={(e) => e.key === 'Enter' && navigate("/Noticias")}>
+      <div>
         <img
-          src="/NoticiaJovem.png"
-          alt="Imagem 1"
-          style={{ cursor: "pointer" }}
+          src={src}
+          alt={alt}
+          style={{
+            margin: "20px",
+            width: "300px",
+            height: "300px",
+            transition: "opacity 0.5s ease-in-out",
+          }}
         />
       </div>
-      <div onClick={() => navigate("/Noticias")} role="button" tabIndex={0} onKeyDown={(e) => e.key === 'Enter' && navigate("/Noticias")}>
-        <img
-          src="/Sub17.png"
-          alt="Imagem 2"
-          style={{ cursor: "pointer" }}
-        />
-      </div>
-      <div onClick={() => navigate("/Noticias")} role="button" tabIndex={0} onKeyDown={(e) => e.key === 'Enter' && navigate("/Noticias")}>
-        <img
-          src="/RenovacaoEstadio.png"
-          alt="Imagem 3"
-          style={{ cursor: "pointer" }}
-        />
-      </div>
-    </Carousel>
+    </div>
   );
 }
 
 function Games() {
   return (
     <>
-      <h2>Acompanha os jogos do GD Estrela do Minho</h2>
+    <h2 style={{ textAlign: "center", fontSize: "18px" }}>Acompanha os jogos do GD Estrela do Minho</h2>
+
+
       <div className="match-box">
         <div className="game-container">
           <div className="game">
@@ -125,6 +160,22 @@ function Games() {
         </div>
       </div>
     </>
+  );
+}
+
+function Video() {
+  return (
+    <div style={{ textAlign: "center", marginTop: "20px" }}>
+      <iframe
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/B4IyVkGQNpk?si=qhQES6yHbyqnOx3B"
+        title="Video"
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+      ></iframe>
+    </div>
   );
 }
 

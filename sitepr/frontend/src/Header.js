@@ -22,8 +22,7 @@ function Header() {
     <a href="/equipa">Equipa</a>
     <a href="/bilhetes">Bilhetes</a>
     <a href="/loja">Loja</a>
-    <a href="/noticias">Notícias</a>
-    <a href="/sobre">Sobre</a>
+    <a href="/informacoes">Informações</a>
     <div className="nav-item-com-botoes">
         <a href="/" onClick={toggleBotoes}>Formulários</a>
         {mostrarBotoes && (
