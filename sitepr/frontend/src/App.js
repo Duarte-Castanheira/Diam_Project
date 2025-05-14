@@ -12,6 +12,7 @@ import AvisoCookies from './AvisoCookies';
 import Perfil from './Perfil';
 import Login from './Login';
 import Equipa from './Equipa';
+import Conteudo from './Conteudo';
 
 function App() {
   return (
@@ -27,7 +28,7 @@ function App() {
         <Route path="/TermosUso" element={<TermosUso />} />
         <Route path="/AvisoCookies" element={<AvisoCookies />} />
         <Route path="/Equipa" element={<Equipa />} />
-
+ <Route path="/noticia/:id" element={<Conteudo />} />
       </Routes>
       <Footer />
     </>

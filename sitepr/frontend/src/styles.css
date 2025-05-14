@@ -385,3 +385,23 @@ article:hover,
   color: #444;
   font-style: italic;
 }
+
+.detalhe {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 14px rgba(0, 104, 55, 0.3);
+  max-width: 800px;
+  margin: 2rem auto;
+  line-height: 1.6;
+}
+
+.detalhe h2 {
+text-align: center;
+  color: #006837;
+  margin-bottom: 1rem;
+}
+
+.detalhe strong {
+  color: #004c29;
+}

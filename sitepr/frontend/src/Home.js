@@ -22,17 +22,17 @@ function Slideshow() {
     {
       src: "/NoticiaJovem.png",
       alt: "Imagem 1",
-      link: "/Noticias",
+      link: "/Informacoes",
     },
     {
       src: "/Sub17.png",
       alt: "Imagem 2",
-      link: "/Noticias",
+      link: "/Informacoes",
     },
     {
       src: "/RenovacaoEstadio.png",
       alt: "Imagem 3",
-      link: "/Noticias",
+      link: "/Informacoes",
     },
   ];
 
