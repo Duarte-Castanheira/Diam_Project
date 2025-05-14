@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 import './styles.css';
 
 function Informacoes() {
@@ -16,35 +17,38 @@ function Informacoes() {
 
 const noticias = [
   {
-    titulo: "Estrela do Minho reforça ataque com jovem promessa brasileira",
-    data: "06 de maio de 2025",
-    conteudo: "O G.D. Estrela do Minho anunciou hoje a contratação de Lucas \"Bola de Ouro\" Mendes, avançado de 20 anos proveniente do Grêmio Novorizontino (Brasil). O jogador assinou por três épocas e já treinou esta manhã em Ponte de Lima."
+    titulo: "Capitão Pedro Carvalho: \"Este grupo tem alma e quer vencer\"",
+    data: "15 de abril de 2025",
+    conteudo: "Em entrevista exclusiva, o capitão da equipa sénior revelou que o balneário está mais unido do que nunca e quer levar o Estrela para a Liga Nacional."
   },
-  {
-    titulo: "Obras no Estádio da Ribeira arrancam este verão",
-    data: "02 de maio de 2025",
-    conteudo: "A direção do Estrela do Minho confirmou o início das obras de requalificação do Estádio Municipal da Ribeira. A empreitada prevê a renovação dos balneários, substituição do relvado sintético por natural híbrido e instalação de iluminação LED."
-  },
-  {
-    titulo: "Equipa sub-17 do Estrela sagra-se campeã distrital",
-    data: "27 de abril de 2025",
-    conteudo: "A formação sub-17 do Estrela do Minho conquistou o título distrital de Viana do Castelo após vencer o SC Vianense por 3-1. Dois dos atletas foram chamados aos treinos da Seleção Sub-18 do Norte."
-  },
+
   {
     titulo: "Estrela e Universidade do Minho assinam protocolo de formação",
     data: "22 de abril de 2025",
     conteudo: "O clube limiano estabeleceu uma parceria com a Universidade do Minho para partilha de metodologias de treino, fisiologia do esforço e psicologia desportiva."
   },
   {
-    titulo: "Capitão Pedro Carvalho: \"Este grupo tem alma e quer vencer\"",
-    data: "15 de abril de 2025",
-    conteudo: "Em entrevista exclusiva, o capitão da equipa sénior revelou que o balneário está mais unido do que nunca e quer levar o Estrela para a Liga Nacional."
+    titulo: "Equipa sub-17 do Estrela sagra-se campeã distrital",
+    data: "27 de abril de 2025",
+    conteudo: "A formação sub-17 do Estrela do Minho conquistou o título distrital de Viana do Castelo após vencer o SC Vianense por 3-1. Dois dos atletas foram chamados aos treinos da Seleção Sub-18 do Norte."
+  },
+
+  {
+    titulo: "Obras no Estádio da Ribeira arrancam este verão",
+    data: "02 de maio de 2025",
+    conteudo: "A direção do Estrela do Minho confirmou o início das obras de requalificação do Estádio Municipal da Ribeira. A empreitada prevê a renovação dos balneários, substituição do relvado sintético por natural híbrido e instalação de iluminação LED."
+  },
+
+  {
+    titulo: "Estrela do Minho reforça ataque com jovem promessa brasileira",
+    data: "06 de maio de 2025",
+    conteudo: "O G.D. Estrela do Minho anunciou hoje a contratação de Lucas \"Bola de Ouro\" Mendes, avançado de 20 anos proveniente do Grêmio Novorizontino (Brasil). O jogador assinou por três épocas e já treinou esta manhã em Ponte de Lima."
   }
 ];
 
 const comunicados = [
   {
-    id: 15,
+    id: 14,
     titulo: "Reforço para o Meio-Campo",
     data: "14 de maio de 2025",
     corpo: `O Grupo Desportivo Estrela do Minho informa os seus sócios, adeptos e comunicação social que chegou a acordo com o atleta Tiago Azevedo, médio-centro de 25 anos, que representava o SC Espinho.
@@ -57,7 +61,7 @@ Bem-vindo, Tiago!`,
     assinatura: "Pelo Minho. Pela Estrela."
   },
   {
-    id: 14,
+    id: 15,
     titulo: "Encerramento Temporário da Bancada Nascente",
     data: "20 de maio de 2025",
     corpo: `O Grupo Desportivo Estrela do Minho informa que, devido ao início das obras de requalificação previstas no Estádio Municipal da Ribeira, a Bancada Nascente ficará temporariamente encerrada ao público a partir do próximo sábado, dia 24 de maio.
@@ -126,25 +130,30 @@ function NoticiasComunicados() {
       <section className="noticias-section">
         <h2>📰 Últimas Notícias</h2>
         {noticias.map((noticia, index) => (
-          <article key={`noticia-${index}`} className="noticia-card">
-            <h3>{noticia.titulo}</h3>
-            <small><em>{noticia.data}</em></small>
-            <p>{noticia.conteudo}</p>
-          </article>
+          <a href={`/noticia/${index}`} key={`noticia-${index}`} className="noticia-card-link">
+            <article className="noticia-card">
+              <h3>{noticia.titulo}</h3>
+              <small><em>{noticia.data}</em></small>
+              <p>{noticia.conteudo}</p>
+            </article>
+          </a>
         ))}
       </section>
 
       <section className="comunicados-section">
         <h2>📢 Comunicados Oficiais</h2>
         {comunicados.map((comunicado) => (
-          <div className="comunicado-card" key={`comunicado-${comunicado.id}`}>
-            <h3>Comunicado Oficial n.º {comunicado.id} – {comunicado.titulo}</h3>
-            <small><em>{comunicado.data}</em></small>
-            <p style={{ whiteSpace: 'pre-line' }}>{comunicado.corpo}</p>
-            <strong>{comunicado.assinatura}</strong>
-          </div>
+          <a href={`/comunicado/${comunicado.id}`} key={`comunicado-${comunicado.id}`} className="comunicado-card-link">
+            <div className="comunicado-card">
+              <h3>Comunicado Oficial n.º {comunicado.id} – {comunicado.titulo}</h3>
+              <small><em>{comunicado.data}</em></small>
+              <p>{comunicado.corpo.slice(0, 100)}...</p>
+              <strong>{comunicado.assinatura}</strong>
+            </div>
+          </a>
         ))}
       </section>
+
     </div>
   );
 }
