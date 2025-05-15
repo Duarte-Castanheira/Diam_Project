@@ -2,13 +2,17 @@ import './styles.css'
 import React, { useState } from 'react';
 
 function Header() {
-  const [mostrarBotoes, setMostrarBotoes] = useState(false);
+    const [mostrarBotoesForm, setMostrarBotoesForm] = useState(false);
+    const [mostrarBotoesEquipa, setMostrarBotoesEquipa] = useState(false);
 
-
-
-  const toggleBotoes = (e) => {
+ const toggleBotoesEquipa = (e) => {
     e.preventDefault(); // Impede o link de redirecionar
-    setMostrarBotoes(prev => !prev);
+    setMostrarBotoesEquipa(prev => !prev);
+  };
+
+  const toggleBotoesForm = (e) => {
+    e.preventDefault(); // Impede o link de redirecionar
+    setMostrarBotoesForm(prev => !prev);
   };
 
   return (
@@ -19,14 +23,24 @@ function Header() {
 
   <div className="navbar">
     <a href="/jogos">Jogos</a>
-    <a href="/equipa">Equipa</a>
+
+    <div className="nav-item-com-botoes">
+        <a href="/" onClick={toggleBotoesEquipa}>Equipa</a>
+        {mostrarBotoesEquipa && (
+        <div className="botoes-container">
+          <a href="/jogadores">Jogadores</a>
+          <a href="/estatisticas">Estatisticas</a>
+        </div>
+        )}
+    </div>
+
     <a href="/bilhetes">Bilhetes</a>
     <a href="/loja">Loja</a>
     <a href="/noticias">Notícias</a>
     <a href="/sobre">Sobre</a>
     <div className="nav-item-com-botoes">
-        <a href="/" onClick={toggleBotoes}>Formulários</a>
-        {mostrarBotoes && (
+        <a href="/" onClick={toggleBotoesForm}>Formulários</a>
+        {mostrarBotoesForm && (
         <div className="botoes-container">
           <a href="/candidatar">Candidatar</a>
           <a href="/inquerito">Inquérito</a>

@@ -8,6 +8,7 @@ from .serializers import *
 from .models import *
 from extras.models import ProdutoLoja
 
+
 @ensure_csrf_cookie
 @api_view(['POST',])
 def signup(request):
@@ -55,8 +56,67 @@ def logout_view(request):
     response.delete_cookie('sessionid')  # força a remoção do cookie
     return response
 
-@api_view(['GET'])
+@api_view(['GET', 'PUT'])
 @permission_classes([IsAuthenticated])
 def user_view(request):
-    return Response({'username': request.user.username, 'email': request.user.email, 'telemovel': request.user.telemovel, 'nascimento': request.user.nascimento,})
+    user = request.user
 
+    if request.method == 'GET':
+        return Response({'username': user.username, 'email': user.email, 'first_name': user.first_name,
+            'last_name': user.last_name, 'telemovel': user.telemovel, 'nascimento': user.nascimento,})
+
+    elif request.method == 'PUT':
+        data = request.data
+        user.username = data.get('username', user.username)
+        user.first_name = data.get('first_name', user.first_name)
+        user.last_name = data.get('last_name', user.last_name)
+        user.email = data.get('email', user.email)
+        user.telemovel = data.get('telemovel', user.telemovel)
+        user.nascimento = data.get('nascimento', user.nascimento)
+        user.password = data.get('password', user.password)
+        user.save()
+
+        return Response({'message': 'Dados atualizados com sucesso!'})
+
+@api_view(['GET', 'POST', 'DELETE'])
+@permission_classes([IsAuthenticated])
+def update_carrinho(request):
+    user = request.user
+    print("POST recebido: ", request.data)
+    print("User: ", request.user)
+    if request.method == 'GET':
+        serializer = CustomUserSerializer(user)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        produtos_ids = request.data.get('carrinho', [])
+
+        if not isinstance(produtos_ids, list):
+            return Response({'error': 'O campo "carrinho" deve ser uma lista de IDs de produtos.'}, status=400)
+
+        produtos_ids = request.data.get('carrinho', [])
+        produtos = ProdutoLoja.objects.filter(id__in=produtos_ids)
+        for produto in produtos:
+            user.carrinho.add(produto)
+        user.save()
+        return Response({'success': 'Carrinho atualizado com sucesso.'})
+
+
+    elif request.method == 'DELETE':
+
+        produto_id = request.data.get('produto_id')
+
+        if not produto_id:
+            return Response({'error': 'Falta o produto_id no pedido.'}, status=400)
+
+        try:
+
+            produto = ProdutoLoja.objects.get(id=produto_id)
+
+        except ProdutoLoja.DoesNotExist:
+
+            return Response({'error': 'Produto não encontrado.'}, status=404)
+
+        user.carrinho.remove(produto)
+
+        return Response({'success': 'Produto removido do carrinho com sucesso.'})

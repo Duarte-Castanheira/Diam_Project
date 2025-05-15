@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 
+
 const Profile = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true); // Mantém o loading a true enquanto não sabemos o estado
@@ -57,9 +58,12 @@ const Profile = () => {
         <h2>O meu perfil</h2>
         <p>Username: {user?.username}</p>
         <p>Email: {user?.email || "não disponível"}</p>
+        <p>Primeiro Nome: {user?.first_name}</p>
+        <p>Último Nome: {user?.last_name}</p>
         <p>Telemóvel: {user?.telemovel || "não disponível"}</p>
         <p>Data de nascimento: {user?.nascimento || "não disponível"}</p>
         <button onClick={handleLogout}>Logout</button>
+        <button onClick={() => navigate('/perfil/editar')}>Editar Perfil</button>
         </div>
     );
 };

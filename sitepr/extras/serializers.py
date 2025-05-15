@@ -9,4 +9,4 @@ class ProdutoLojaSerializer(serializers.ModelSerializer):
 class NoticiaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Noticia
-        fields = ('pk', 'titulo', 'data', 'noticia_texto')
+        fields = ('pk', 'titulo', 'data', 'noticia_texto', 'imagem')

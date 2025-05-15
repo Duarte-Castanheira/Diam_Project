@@ -19,9 +19,9 @@ def produto_loja_list(request):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
-def produto_loja_detail(request, pk):
+def produto_loja_detail(request, produto_id):
     try:
-        produto = ProdutoLoja.objects.get(pk=pk)
+        produto = ProdutoLoja.objects.get(pk=produto_id)
     except ProdutoLoja.DoesNotExist:
         return Response({'error': 'Produto não encontrado'}, status=status.HTTP_404_NOT_FOUND)
 

@@ -8,6 +8,7 @@ class Jogo(models.Model):
     resultado = models.CharField(max_length=200)
     local = models.CharField(max_length=200)
     bilhetes_vendidos = models.IntegerField(default=0)
+    bilhetes_maximos = models.IntegerField(default=0)
 
 class Convocatoria(models.Model):
     jogo = models.ForeignKey(Jogo, on_delete=models.CASCADE)
@@ -19,4 +20,3 @@ class Bilhete(models.Model):
     setor = models.CharField(max_length=200)
     fila = models.IntegerField(default=0)
     lugar = models.IntegerField(default=0)
-    numero = models.IntegerField(default=0)

@@ -21,9 +21,9 @@ def jogadores_list(request):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
-def jogador_detail(request, pk):
+def jogador_detail(request, jogador_id):
     try:
-        jogador = Jogador.objects.get(pk=pk)
+        jogador = Jogador.objects.get(pk=jogador_id)
     except Jogador.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -55,9 +55,9 @@ def estatistica_list(request):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
-def estatistica_detail(request, pk):
+def estatistica_detail(request, jogador_id):
     try:
-        estatistica = Estatistica.objects.get(pk=pk)
+        estatistica = Estatistica.objects.get(pk=jogador_id)
     except Estatistica.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -75,3 +75,4 @@ def estatistica_detail(request, pk):
     elif request.method == 'DELETE':
         estatistica.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+

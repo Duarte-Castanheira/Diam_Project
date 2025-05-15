@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "reactstrap";
+import { Table, Button } from "reactstrap";
 import axios from "axios";
 
 function Forms() {

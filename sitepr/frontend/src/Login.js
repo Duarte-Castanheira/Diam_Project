@@ -30,6 +30,7 @@ function Login() {
     .then(() => {
       setUser(''); // Limpa os campos
       setPassword('');
+      console.log("autenticado com sucesso");
       navigate('/perfil'); // Navega só após login com sucesso
     })
     .catch(err => console.error('Login failed:', err));

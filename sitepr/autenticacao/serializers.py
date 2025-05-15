@@ -1,24 +1,14 @@
-from django.contrib.auth.models import User
 from rest_framework import serializers
 from .models import CustomUser
-
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CustomUser
-        fields = ('id', 'username', 'password', 'email','carrinho', 'telemovel', 'data_nascimento','pub_data')
-
-    def create(self, validated_data):
-        user = User.objects.create_user(**validated_data)
-        return user
-
-
+from extras.serializers import ProdutoLojaSerializer
 
 class CustomUserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
+    carrinho = ProdutoLojaSerializer(many=True, read_only=True)
 
     class Meta:
         model = CustomUser
-        fields = ['id', 'username', 'email', 'password', 'nascimento', 'telemovel']
+        fields = ['id', 'username', 'email', 'password', 'nascimento', 'telemovel', 'carrinho']
 
     def create(self, validated_data):
         password = validated_data.pop('password')
