@@ -358,25 +358,34 @@ a {
 }
 
 .imagem-wrapper {
-  position: relative;
-  overflow: hidden;
-  border-radius: 10px;
   width: 100%;
+  overflow: hidden;
+  border-radius: 12px;
 }
 
 .imagem-wrapper img {
-  width: 100%;
   display: block;
-  object-fit: cover;
-  border-radius: 10px;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  object-fit: contain;
 }
+
 .card.imagem-card {
-  flex: 1 1 300px;
-  max-width: 400px;
+      flex: 0 1 calc(33.33% - 20px);
+  max-width: calc(33.33% - 20px);
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
 }
 
 .tituloImagem {
-  position: absolute;
+   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
@@ -389,4 +398,65 @@ a {
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   font-size: 1rem;
+}
+
+
+.Sobre {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  margin-top: 40px;
+  box-shadow: 0 5px 19px rgba(0, 128, 0, 0.2);
+  line-height: 1.6;
+  color: #333;
+  border: 2px solid transparent;
+  transition: border-color 0.9s ease, box-shadow 0.9s ease;
+}
+.Sobre:hover {
+  border-color: #008000;
+  box-shadow: 0 8px 30px rgba(0, 128, 0, 0.2);/* sombra verde mais intensa */
+}
+
+.Sobre h3 {
+  font-size: 1.2rem;
+  margin-top: 25px;
+  margin-bottom: 10px;
+  color: #006400;
+  border-bottom: 1px solid #00800050;
+  padding-bottom: 4px;
+}
+
+.Sobre ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.Sobre ul li {
+  padding-left: 1.5em;
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.Sobre ul li::before {
+  content: "✔️";
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 0.9em;
+  color: #008000;
+}
+
+.Sobre p {
+  text-align: justify;
+  margin-bottom: 16px;
+}
+
+.Sobre p:last-of-type {
+  font-style: italic;
+  font-weight: bold;
+  color: #004d00;
+  text-align: center;
+  font-size: 1.1rem;
+  margin-top: 20px;
 }
