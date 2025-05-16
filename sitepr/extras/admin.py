@@ -27,12 +27,20 @@ class ProdutoLojaAdmin(admin.ModelAdmin):
 
 @admin.register(Noticia)
 class NoticiaAdmin(admin.ModelAdmin):
-    list_display = ('titulo', 'data')
+    list_display = ('titulo', 'data', 'imagem_preview')
     search_fields = ('titulo','data', 'noticia_texto')
     list_filter = ('titulo','data')
 
+    readonly_fields = ('imagem_preview',)
+
     fieldsets = (
         ('Conteúdo da Notícia', {
-            'fields': ('titulo', 'data', 'noticia_texto')
+            'fields': ('titulo', 'data', 'noticia_texto', 'imagem', 'imagem_preview')
         }),
     )
+
+    def imagem_preview(self, obj):
+        if obj.imagem:
+            return format_html('<img src="{}" style="max-height: 200px;" />', obj.imagem.url)
+        return "Sem imagem"
+    imagem_preview.short_description = "Pré-visualização"

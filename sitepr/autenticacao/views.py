@@ -7,6 +7,9 @@ from rest_framework import status
 from .serializers import *
 from .models import *
 from extras.models import ProdutoLoja
+from jogos.models import Bilhete
+
+from extras.serializers import ProdutoLojaSerializer
 
 
 @ensure_csrf_cookie
@@ -60,10 +63,10 @@ def logout_view(request):
 @permission_classes([IsAuthenticated])
 def user_view(request):
     user = request.user
-
+    carrinho_serializado = ProdutoLojaSerializer(user.carrinho.all(), many=True)
     if request.method == 'GET':
         return Response({'username': user.username, 'email': user.email, 'first_name': user.first_name,
-            'last_name': user.last_name, 'telemovel': user.telemovel, 'nascimento': user.nascimento,})
+            'last_name': user.last_name, 'telemovel': user.telemovel, 'nascimento': user.nascimento,'carrinho': carrinho_serializado.data})
 
     elif request.method == 'PUT':
         data = request.data
@@ -94,8 +97,8 @@ def update_carrinho(request):
         if not isinstance(produtos_ids, list):
             return Response({'error': 'O campo "carrinho" deve ser uma lista de IDs de produtos.'}, status=400)
 
-        produtos_ids = request.data.get('carrinho', [])
         produtos = ProdutoLoja.objects.filter(id__in=produtos_ids)
+        user.carrinho.clear()
         for produto in produtos:
             user.carrinho.add(produto)
         user.save()
@@ -120,3 +123,41 @@ def update_carrinho(request):
         user.carrinho.remove(produto)
 
         return Response({'success': 'Produto removido do carrinho com sucesso.'})
+
+
+@api_view(['GET', 'POST', 'DELETE'])
+@permission_classes([IsAuthenticated])
+def update_carrinho_bilhete(request):
+    user = request.user
+    print("POST recebido: ", request.data)
+    print("User: ", request.user)
+
+    if request.method == 'GET':
+        serializer = CustomUserSerializer(user)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        bilhetes_ids = request.data.get('carrinho', [])
+
+        if not isinstance(bilhetes_ids, list):
+            return Response({'error': 'O campo "carrinho" deve ser uma lista de IDs de bilhetes.'}, status=400)
+
+        bilhetes = Bilhete.objects.filter(id__in=bilhetes_ids)
+        for bilhete in bilhetes:
+            user.carrinho.add(bilhete)
+        user.save()
+        return Response({'success': 'Carrinho atualizado com sucesso.'})
+
+    elif request.method == 'DELETE':
+        bilhete_id = request.data.get('bilhete_id')
+
+        if not bilhete_id:
+            return Response({'error': 'Falta o bilhete_id no pedido.'}, status=400)
+
+        try:
+            bilhete = Bilhete.objects.get(id=bilhete_id)
+        except Bilhete.DoesNotExist:
+            return Response({'error': 'Bilhete não encontrado.'}, status=404)
+
+        user.carrinho.remove(bilhete)
+        return Response({'success': 'Bilhete removido do carrinho com sucesso.'})

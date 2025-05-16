@@ -109,3 +109,9 @@ def bilhete_detail(request, pk):
     elif request.method == 'DELETE':
         bilhete.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['GET'])
+def bilhetes_por_jogo(request, bilhete_id):
+    bilhetes = Bilhete.objects.filter(jogo_id=bilhete_id)
+    serializer = BilheteSerializer(bilhetes, many=True)
+    return Response(serializer.data)

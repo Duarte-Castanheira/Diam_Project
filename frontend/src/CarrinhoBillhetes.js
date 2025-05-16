@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 function Carrinho() {
-    const [produtos, setProdutos] = useState([]);
+    const [bilhete, setBilhetes] = useState([]);
     const [carrinho, setCarrinho] = useState([]);
     const [user, setUser] = useState(null);
 
@@ -38,13 +38,6 @@ function Carrinho() {
         .catch(err => console.error("Erro ao atualizar carrinho:", err));
     };
 
-    const adicionarAoCarrinho = (produto) => {
-    const novoCarrinho = [...carrinho, produto];
-    setCarrinho(novoCarrinho);
-
-    const ids = novoCarrinho.map(p => p.id);
-    atualizarCarrinhoNoServidor(ids);
-};
 
     const removerDoCarrinho = (produtoId) => {
     const novoCarrinho = carrinho.filter(p => p.id !== produtoId);
@@ -71,7 +64,7 @@ function Carrinho() {
                 {carrinho.map((produto, index) => (
                     <li key={index}>
                         {produto.nome} - {produto.preco}€
-                        <button onClick={() => removerDoCarrinho(produto.id)}>Remover</button>
+                        <button onClick={() => adicionarAoCarrinho(produto)}>Adicionar</button>
                     </li>
                 ))}
             </ul>

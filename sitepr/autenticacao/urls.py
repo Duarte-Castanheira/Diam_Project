@@ -8,5 +8,7 @@ urlpatterns = [
     path("api/logout/", views.logout_view),
     path("api/user/", views.user_view),
     path("api/user/carrinho", views.update_carrinho),
+    path("api/user/carrinho/bilhete", views.update_carrinho),
+
 
 ]

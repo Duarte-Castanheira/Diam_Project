@@ -7,7 +7,7 @@ class CustomUserAdmin(UserAdmin):
     model = CustomUser
     fieldsets = UserAdmin.fieldsets + (
         (_('Informações extra'), {
-            'fields': ('nascimento', 'telemovel','carrinho'),
+            'fields': ('nascimento', 'telemovel','carrinho','carrinho_bilhete'),
         }),
     )
     add_fieldsets = UserAdmin.add_fieldsets + (
@@ -15,5 +15,5 @@ class CustomUserAdmin(UserAdmin):
             'fields': ('nascimento', 'telemovel'),
         }),
     )
-    filter_horizontal = ('carrinho',)
+    filter_horizontal = ('carrinho','carrinho_bilhete',)
 admin.site.register(CustomUser, CustomUserAdmin)

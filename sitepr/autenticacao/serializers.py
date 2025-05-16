@@ -5,10 +5,10 @@ from extras.serializers import ProdutoLojaSerializer
 class CustomUserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     carrinho = ProdutoLojaSerializer(many=True, read_only=True)
-
+    carrinho_bilhete = serializers.CharField(read_only=True)
     class Meta:
         model = CustomUser
-        fields = ['id', 'username', 'email', 'password', 'nascimento', 'telemovel', 'carrinho']
+        fields = ['id', 'username', 'email', 'password', 'nascimento', 'telemovel', 'carrinho','carrinho_bilhete']
 
     def create(self, validated_data):
         password = validated_data.pop('password')

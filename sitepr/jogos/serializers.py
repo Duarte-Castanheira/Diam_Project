@@ -6,7 +6,7 @@ class JogoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Jogo
         fields = ('pk', 'data', 'hora', 'adversario', 'resultado',
-                  'local', 'bilhetes_vendidos')
+                  'local', 'bilhetes_vendidos', 'bilhetes_maximos')
 
 class ConvocatoriaSerializer(serializers.ModelSerializer):
     jogadores = JogadorSerializer(many=True)

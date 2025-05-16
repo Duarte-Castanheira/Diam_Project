@@ -40,9 +40,7 @@ function Bilhetes() {
         )}
       </div>
 
-      <footer className="loja-footer">
-        <p>&copy; Bilhetes Estrela do Minho 2025. Todos os direitos reservados.</p>
-      </footer>
+
     </div>
   );
 }

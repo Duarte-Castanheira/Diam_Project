@@ -31,7 +31,7 @@ function DetalhesProduto() {
     console.log("A adicionar ao carrinho o produto:", produto);
   console.log("ID do produto:", produto?.id);
     axios.post('http://localhost:8000/autenticacao/api/user/carrinho', {
-        carrinho: [produto.pk]  // <-- tem que ser assim, lista de IDs com o campo "carrinho"
+        carrinho: [produto.pk]
     }, {
         headers: {
             'X-CSRFToken': getCSRFToken()
