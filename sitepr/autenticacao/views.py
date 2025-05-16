@@ -92,6 +92,7 @@ def update_carrinho(request):
         return Response(serializer.data)
 
 
+
     elif request.method == 'POST':
 
         produtos_ids = request.data.get('carrinho', [])
@@ -99,14 +100,16 @@ def update_carrinho(request):
         if not isinstance(produtos_ids, list):
             return Response({'error': 'O campo "carrinho" deve ser uma lista de IDs de produtos.'}, status=400)
 
+        user.carrinho.clear()  # <- limpa tudo
+
         produtos = ProdutoLoja.objects.filter(id__in=produtos_ids)
 
         for produto in produtos:
-            user.carrinho.add(produto)  # NÃO faz clear primeiro
+            user.carrinho.add(produto)
 
         user.save()
 
-        return Response({'success': 'Produto(s) adicionado(s) ao carrinho com sucesso.'})
+        return Response({'success': 'Carrinho atualizado com sucesso.'})
 
     elif request.method == 'DELETE':
 
