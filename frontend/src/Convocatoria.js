@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 function Convocatoria() {
-    const JOGADORES_URL = 'http://localhost:8000/jogos/api/jogadores'; // Ajusta isto conforme o endpoint real
-    const [jogadores, setJogadores] = useState([]);
+    const { convocatoriaId } = useParams();
+    const CONVOCATORIA_URL = `http://localhost:8000/jogador/api/jogador/${convocatoriaId}/`; // Ajusta isto conforme o endpoint real
+    const [convocatoria, setConvocatoria] = useState([]);
 
     useEffect(() => {
-        axios.get(JOGADORES_URL, { withCredentials: true })
+        axios.get(CONVOCATORIA_URL, { withCredentials: true })
             .then(res => {
-                setJogadores(res.data);
+                setConvocatoria(res.data);
             })
             .catch(err => {
                 console.error("Erro ao buscar jogadores:", err);
@@ -19,7 +21,7 @@ function Convocatoria() {
         <div>
             <h2>Lista de Jogadores</h2>
             <ul>
-                {jogadores.map((jogador, index) => (
+                {convocatoria.map((jogador, index) => (
                     <li key={index}>
                         {jogador.nome} - {jogador.posicao}
                     </li>

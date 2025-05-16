@@ -69,9 +69,6 @@ export default Jogador;
 
 
 
-
-
-
 function calcularIdade(dataNascimento) {
   const hoje = new Date();
   const nascimento = new Date(dataNascimento);

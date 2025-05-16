@@ -27,6 +27,7 @@ function Jogos() {
               <h3>GD Estrela do Minho <br /> vs <br /> {jogo.adversario}</h3>
               <p><strong>Data:</strong> {jogo.data}</p>
               <p><strong>Local:</strong> {jogo.local}</p>
+              <a href="/convocatoria/jogosId">Convocatória</a>
             </div>
           ))
         )}

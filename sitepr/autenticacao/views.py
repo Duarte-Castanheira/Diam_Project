@@ -85,13 +85,9 @@ def user_view(request):
 @permission_classes([IsAuthenticated])
 def update_carrinho(request):
     user = request.user
-    print("POST recebido: ", request.data)
-    print("User: ", request.user)
     if request.method == 'GET':
         serializer = CustomUserSerializer(user)
         return Response(serializer.data)
-
-
 
     elif request.method == 'POST':
 
