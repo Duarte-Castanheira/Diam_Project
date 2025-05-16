@@ -31,10 +31,6 @@ function Jogos() {
           ))
         )}
       </div>
-
-      <footer className="loja-footer">
-        <p>&copy; GD Estrela do Minho 2025. Todos os direitos reservados.</p>
-      </footer>
     </div>
   );
 }

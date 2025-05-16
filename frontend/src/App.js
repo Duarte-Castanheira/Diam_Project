@@ -20,7 +20,7 @@ import AddBilhetes from "./AddBilhetes";
 import Loja from "./Loja";
 import Carrinho from "./Carrinho";
 import Jogos from "./Jogos";
-
+import Convocatoria from "./Convocatoria";
 
 function App() {
   return (
@@ -45,6 +45,7 @@ function App() {
         <Route path="/jogo/:pk" element={<AddBilhetes />} />
         <Route path= "/perfil/carrinho" element={<Carrinho />} />
         <Route path="/jogos" element={<Jogos/>} />
+        <Route path="/convocatoria" element={<Convocatoria/>} />
         <Route path="/carrinho" element={<Carrinho/>} />
         <Route path="/bilhetes/:bilheteId" element={<AddBilhetes/>} />
 
