@@ -68,7 +68,6 @@ function Carrinho() {
     return (
         <div>
 
-
             <h2>O teu Carrinho</h2>
             <ul>
                 {carrinho.map((produto, index) => (

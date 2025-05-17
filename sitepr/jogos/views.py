@@ -56,9 +56,9 @@ def convocatoria_list(request):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
-def convocatoria_detail(request, pk):
+def convocatoria_detail(request, convocatoria_id):
     try:
-        convocatoria = Convocatoria.objects.get(pk=pk)
+        convocatoria = Convocatoria.objects.get(pk=convocatoria_id)
     except Convocatoria.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 

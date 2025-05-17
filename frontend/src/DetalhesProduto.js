@@ -10,9 +10,9 @@ function DetalhesProduto() {
   const PRODUTO_URL = `http://localhost:8000/extras/api/produto/${produtoId}/`;
 
 
-     function getCSRFToken() {
-    return document.cookie.split('; ').find(row => row.startsWith('csrftoken='))?.split('=')[1];
-  }
+    function getCSRFToken() {
+        return document.cookie.split('; ').find(row => row.startsWith('csrftoken='))?.split('=')[1];
+    }
 
     useEffect(() => {
         axios.get(PRODUTO_URL)
@@ -29,7 +29,7 @@ function DetalhesProduto() {
     const adicionarAoCarrinho = () => {
 
     console.log("A adicionar ao carrinho o produto:", produto);
-  console.log("ID do produto:", produto?.id);
+    console.log("ID do produto:", produto?.id);
     axios.post('http://localhost:8000/autenticacao/api/user/carrinho', {
         carrinho: [produto.pk]
     }, {

@@ -45,7 +45,7 @@ function App() {
         <Route path="/jogo/:pk" element={<AddBilhetes />} />
         <Route path= "/perfil/carrinho" element={<Carrinho />} />
         <Route path="/jogos" element={<Jogos/>} />
-        <Route path="/convocatoria" element={<Convocatoria/>} />
+        <Route path="/convocatoria/:convocatoriaId" element={<Convocatoria/>} />
         <Route path="/carrinho" element={<Carrinho/>} />
         <Route path="/bilhetes/:bilheteId" element={<AddBilhetes/>} />
 

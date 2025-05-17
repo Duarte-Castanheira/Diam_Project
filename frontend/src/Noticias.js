@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './styles.css';
 import axios from 'axios';
-//import { useNavigate } from 'react-router-dom';
-import { Table } from "reactstrap";
+
 
 function Noticias() {
 
@@ -15,9 +14,9 @@ function Noticias() {
         }, []);
 
     return (
-        <div className="DocLegal">
+        <div>
 
-            <main className="noticias-container">
+
                 <h2>Últimas Notícias</h2>
                 {noticiaList.map((noticia, index) => (
                     <article key={index} className="noticia-card">
@@ -26,7 +25,7 @@ function Noticias() {
                         <small><em>{noticia.data}</em></small>
                     </article>
                 ))}
-            </main>
+
 
         </div>
     );

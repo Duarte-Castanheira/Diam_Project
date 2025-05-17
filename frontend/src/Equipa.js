@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './styles.css';
 import axios from 'axios';
-//import { useNavigate } from 'react-router-dom';
-import { Table } from "reactstrap";
+
 
 function Equipa() {
 
@@ -25,6 +24,7 @@ function Equipa() {
           className="jogador-imagem"
         />
         <h2 style={{ marginBottom: '10px' }}>{p.nome}</h2>
+        <p><strong>Posicao:</strong> {p.posicao}</p>
         <p><strong>Idade:</strong> {calcularIdade(p.data_nascimento)} anos</p>
         <p><strong>Nascimento:</strong> {formatarData(p.data_nascimento)}</p>
         <hr style={{ margin: '20px 0' }} />

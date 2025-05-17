@@ -4,29 +4,33 @@ import axios from 'axios';
 
 function Convocatoria() {
     const { convocatoriaId } = useParams();
-    const CONVOCATORIA_URL = `http://localhost:8000/jogador/api/jogador/${convocatoriaId}/`; // Ajusta isto conforme o endpoint real
+    const CONVOCATORIA_URL = `http://localhost:8000/jogos/api/convocatoria/${convocatoriaId}/`; // Ajusta isto conforme o endpoint real
     const [convocatoria, setConvocatoria] = useState([]);
 
     useEffect(() => {
-        axios.get(CONVOCATORIA_URL, { withCredentials: true })
+        axios.get(CONVOCATORIA_URL)
             .then(res => {
                 setConvocatoria(res.data);
             })
             .catch(err => {
                 console.error("Erro ao buscar jogadores:", err);
             });
-    }, []);
+    }, [convocatoriaId]);
 
     return (
-        <div>
-            <h2>Lista de Jogadores</h2>
-            <ul>
-                {convocatoria.map((jogador, index) => (
-                    <li key={index}>
-                        {jogador.nome} - {jogador.posicao}
-                    </li>
-                ))}
-            </ul>
+
+        <div className="lista-jogadores-container">
+            {convocatoria?.jogadores?.map((jogador, index) => (
+                <div key={index} className="jogador-card">
+                    <img
+                        src={`http://localhost:8000${jogador.imagem}`}
+                        alt={jogador.nome}
+                        className="jogador-imagem"
+                    />
+                    <h2 style={{ marginBottom: '10px' }}>{jogador.nome}</h2>
+                    <p><strong>Posicao:</strong> {jogador.posicao}</p>
+                </div>
+            ))}
         </div>
     );
 }

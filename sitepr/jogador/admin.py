@@ -5,14 +5,14 @@ from .models import Jogador, Estatistica
 
 @admin.register(Jogador)
 class JogadorAdmin(admin.ModelAdmin):
-    list_display = ('nome', 'numero', 'data_nascimento', 'imagem_preview', 'nacionalidade_preview')
-    search_fields = ('nome',)
+    list_display = ('nome', 'numero','posicao', 'data_nascimento', 'imagem_preview', 'nacionalidade_preview')
+    search_fields = ('nome','posicao', 'numero')
     list_filter = ('data_nascimento',)
     readonly_fields = ('imagem_preview', 'nacionalidade_preview')
 
     fieldsets = (
         ('Informações principais', {
-            'fields': ('nome', 'numero', 'data_nascimento', 'nacionalidade', 'nacionalidade_preview', 'valor_mercado')
+            'fields': ('nome', 'numero','posicao', 'data_nascimento', 'nacionalidade', 'nacionalidade_preview', 'valor_mercado')
         }),
         ('Imagem e estatísticas', {
             'fields': ('imagem', 'imagem_preview', 'stats')

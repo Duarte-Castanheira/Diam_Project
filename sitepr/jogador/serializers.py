@@ -10,4 +10,4 @@ class EstatisticasSerializer(serializers.ModelSerializer):
 class JogadorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Jogador
-        fields = ('pk', 'nome', 'numero', 'data_nascimento', 'imagem','nacionalidade','valor_mercado', 'stats')
+        fields = ('pk', 'nome', 'numero','posicao', 'data_nascimento', 'imagem','nacionalidade','valor_mercado', 'stats')
