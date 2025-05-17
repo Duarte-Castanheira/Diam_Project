@@ -5,8 +5,6 @@ import {Link} from "react-router-dom";
 
 function Loja() {
   const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState([]);
-  const [totalPrice, setTotalPrice] = useState(0);
 
  useEffect(() => {
   axios.get("http://localhost:8000/extras/api/produtos/")
@@ -17,16 +15,6 @@ function Loja() {
       console.error("Erro ao buscar produtos:", error.message);
     });
 }, []);
-
-
-  const fetchProducts = async () => {
-    try {
-      const response = await axios.get("http://localhost:8000/extras/api/produtos/");
-      setProducts(response.data);
-    } catch (error) {
-      console.error("Erro ao buscar produtos:", error.message);
-    }
-  };
 
  return (
     <div className="loja">

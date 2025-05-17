@@ -7,7 +7,6 @@ function Equipa() {
 
         const [playerList, setPlayerList] = useState([]);
         const EQUIPA_URL= 'http://localhost:8000/jogador/api/jogadores/';
-        //const navigate = useNavigate();
 
         useEffect(() => {
             axios.get(EQUIPA_URL)

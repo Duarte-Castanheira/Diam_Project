@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from 'react-router-dom';
 import "./styles.css";
 import axios from "axios";
 
 function Jogos() {
-    const {jogosId} = useParams();
     const [jogos, setJogos] = useState([]);
 
     useEffect(() => {

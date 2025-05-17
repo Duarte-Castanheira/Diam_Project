@@ -4,11 +4,10 @@ import axios from 'axios';
 
 function Convocatoria() {
     const { convocatoriaId } = useParams();
-    const CONVOCATORIA_URL = `http://localhost:8000/jogos/api/convocatoria/${convocatoriaId}/`; // Ajusta isto conforme o endpoint real
     const [convocatoria, setConvocatoria] = useState([]);
 
     useEffect(() => {
-        axios.get(CONVOCATORIA_URL)
+        axios.get(`http://localhost:8000/jogos/api/convocatoria/${convocatoriaId}/`)
             .then(res => {
                 setConvocatoria(res.data);
             })
