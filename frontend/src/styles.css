@@ -302,18 +302,6 @@ form button:hover {
   background-color: #8fd3ba;
 }
 
-/* Rodapé da loja */
-.loja-footer {
-  width: 100%;
-  background-color: #f1f1f1;
-  text-align: center;
-  padding: 15px;
-  margin-top: 40px;
-  font-size: 14px;
-  color: #333;
-  border-top: 1px solid #ccc;
-}
-
 .perfil {
   background-color: #fff;
   padding: 10px;
@@ -453,37 +441,86 @@ form button:hover {
 }
 
 .lista-jogadores-container {
-  max-width: 600px;
-  margin: 50px auto;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
   padding: 20px;
-  background: #f9f9f9;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
 }
 
 .jogador-card {
-  background: white;
-  border: 1px solid #e0e0e0;
+  width: 250px;
+  min-height: 500px; /* força todos os cartões a terem pelo menos esta altura */
+  background-color: #fff;
+  padding: 15px;
   border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 16px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.jogador-card img {
-width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 50%; /* <-- Isto faz a imagem redonda */
+.jogador-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.jogador-card {
+  width: 250px;
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: grid;
+  grid-template-rows: auto 40px 30px 60px auto 40px 30px;
+  align-items: start;
+  text-align: center;
+  height: 550px; /* força todos os cartões a mesma altura geral */
+}
+
+.jogador-imagem {
+  max-width: 120px;
+  height: auto;
+  border-radius: 8px;
+  justify-self: center;
   margin-bottom: 10px;
 }
 
-.jogador-card a {
-  color: #3b82f6;
-  text-decoration: none;
+.jogador-foto {
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.jogador-card h2 {
+  font-size: 18px;
   font-weight: bold;
+  color: #333;
+  margin: 0;
+  align-self: center;
+}
+
+.jogador-card p {
+  font-size: 14px;
+  color: #444;
+  margin: 0;
+}
+
+.jogador-card hr {
+  width: 100%;
+  margin: 10px 0;
+}
+
+.jogador-card a {
+  margin-top: auto;
+  color: #016c40;
+  font-weight: bold;
+  text-decoration: none;
 }
 
 .jogador-card a:hover {
