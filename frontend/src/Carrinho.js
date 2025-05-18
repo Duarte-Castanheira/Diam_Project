@@ -90,7 +90,7 @@ function Carrinho() {
             ) : (
                 <div>
                     {carrinho.map((produto) => (
-                        <div key={produto.pk} style={{ marginBottom: '20px' }}>
+                        <div key={produto.pk} className="detalhes-produto">
                             <h3>{produto.nome}</h3>
                             <img src={`http://localhost:8000${produto.imagem}`} alt={produto.nome} />
                             <p><strong>Preço:</strong> €{produto.preco}</p>

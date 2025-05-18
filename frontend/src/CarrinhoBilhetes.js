@@ -53,7 +53,7 @@ function CarrinhoBilhetes() {
             ) : (
                 <ul>
                     {carrinhoBilhetes.map((bilhete, index) => (
-                        <div key={index} style={{ marginBottom: '20px' }}>
+                        <div key={index} className="detalhes-produto">
                             <h3>Bancada: {bilhete.bancada}</h3>
                              <p>Preço: €{bilhete.preco}</p>
                             <button onClick={() => removerDoCarrinhoBilhetes(bilhete.pk)}>Remover</button>
