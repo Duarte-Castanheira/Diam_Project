@@ -21,6 +21,7 @@ import Loja from "./Loja";
 import Carrinho from "./Carrinho";
 import Jogos from "./Jogos";
 import Convocatoria from "./Convocatoria";
+import Estatisticas from "./Estatisticas";
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
         <Route path="/AvisoCookies" element={<AvisoCookies />} />
         <Route path="/loja" element={<Loja />} />
         <Route path= "/jogador/:jogadorId" element={<Jogador />} />
+        <Route path="/estatisticas" element={<Estatisticas/>} />
         <Route path="/produto/:produtoId" element={<DetalhesProduto />} />
         <Route path="/bilhetes" element={<Bilhetes/>} />
         <Route path="/jogo/:pk" element={<AddBilhetes />} />

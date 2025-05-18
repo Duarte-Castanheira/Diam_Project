@@ -101,7 +101,12 @@ def update_carrinho(request):
         produtos = ProdutoLoja.objects.filter(id__in=produtos_ids)
 
         for produto in produtos:
-            user.carrinho.add(produto)
+            if produto.stock > 0:
+                produto.stock -= 1  # reduz o stock
+                produto.save()
+                user.carrinho.add(produto)
+            else:
+                return Response({'error': f'Stock insuficiente para o produto {produto.nome}.'}, status=400)
 
         user.save()
 
@@ -115,16 +120,16 @@ def update_carrinho(request):
             return Response({'error': 'Falta o produto_id no pedido.'}, status=400)
 
         try:
-
             produto = ProdutoLoja.objects.get(id=produto_id)
-
         except ProdutoLoja.DoesNotExist:
-
             return Response({'error': 'Produto não encontrado.'}, status=404)
 
         user.carrinho.remove(produto)
+        produto.stock += 1
+        produto.save()
+        user.save()
 
-        return Response({'success': 'Produto removido do carrinho com sucesso.'})
+        return Response({'success': 'Produto removido do carrinho e stock atualizado com sucesso.'})
 
 
 @api_view(['GET', 'POST', 'DELETE'])

@@ -44,14 +44,26 @@ def jogador_detail(request, jogador_id):
 
 
 # CRUD Views for Estatistica
-@api_view(['GET', 'POST'])
+@api_view(['GET'])
 def estatistica_list(request):
-    if request.method == 'POST':
-        serializer = EstatisticasSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    estatisticas = Estatistica.objects.select_related('jogador').all()
+    data = []
+
+    for estat in estatisticas:
+        data.append({
+            "id": estat.jogador.id,
+            "nome": estat.jogador.nome,
+            "posicao": estat.jogador.posicao,
+            "stats": {
+                "numero_jogos": estat.numero_jogos,
+                "golos": estat.golos,
+                "assistencias": estat.assistencias,
+                "cartoes_amarelos": estat.cartoes_amarelos,
+                "cartoes_vermelhos": estat.cartoes_vermelhos
+            }
+        })
+
+    return Response(data)
 
 
 @api_view(['GET', 'PUT', 'DELETE'])

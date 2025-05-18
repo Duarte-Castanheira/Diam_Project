@@ -45,7 +45,7 @@ function Carrinho() {
         if (!user) return;
 
         axios.post(UPDATE_CARRINHO_URL, {
-            carrinho: ids   // envia o array de IDs correto
+            carrinho: ids
         }, {
             headers: {
                 'X-CSRFToken': getCSRFToken()
@@ -61,22 +61,45 @@ function Carrinho() {
         const novoCarrinho = carrinho.filter(p => p.pk !== produtoId);
         setCarrinho(novoCarrinho);
 
-        const ids = novoCarrinho.map(p => p.pk);
-        atualizarCarrinhoNoServidor(ids);
+        axios.delete(UPDATE_CARRINHO_URL, {
+            headers: {
+                'X-CSRFToken': getCSRFToken()
+            },
+            data: { produto_id: produtoId },
+            withCredentials: true
+        })
+        .then(() => {
+            console.log('Produto removido do carrinho e stock atualizado no servidor.');
+        })
+        .catch(err => {
+            console.error('Erro ao remover produto do carrinho:', err);
+        });
     };
 
     return (
-        <div>
-
+        <div className="detalhes-produto">
             <h2>O teu Carrinho</h2>
-            <ul>
-                {carrinho.map((produto, index) => (
-                    <li key={index}>
-                        {produto.nome} - {produto.preco}€
-                        <button onClick={() => removerDoCarrinho(produto.pk)}>Remover</button>
-                    </li>
-                ))}
-            </ul>
+
+            {carrinho.length === 0 ? (
+                <>
+                    <p style={{fontFamily:"emoji"}}><strong>Ainda não adicionou produtos no carrinho</strong></p>
+                    <button onClick={() => window.location.href = '/loja'}>
+                        Ir para a Loja
+                    </button>
+                </>
+            ) : (
+                <div>
+                    {carrinho.map((produto) => (
+                        <div key={produto.pk} style={{ marginBottom: '20px' }}>
+                            <h3>{produto.nome}</h3>
+                            <img src={`http://localhost:8000${produto.imagem}`} alt={produto.nome} />
+                            <p><strong>Preço:</strong> €{produto.preco}</p>
+                            <p><strong>Descrição:</strong> {produto.descricao}</p>
+                            <button onClick={() => removerDoCarrinho(produto.pk)}>Remover</button>
+                        </div>
+                    ))}
+                </div>
+            )}
         </div>
     );
 }
