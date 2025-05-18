@@ -5,7 +5,7 @@ import './styles.css'
 
 function Estatisticas() {
     const [statsList, setStatsList] = useState([]);
-    const [sortKey, setSortKey] = useState("golos"); // chave da ordenação (default: golos)
+    const [sortKey, setSortKey] = useState("golos");
     const [sortDirection, setSortDirection] = useState("desc");
 
     const sortedStats = [...statsList].sort((a, b) => {
@@ -57,7 +57,7 @@ function Estatisticas() {
                             <td>{jogador.posicao}</td>
                             <td>{jogador.stats.numero_jogos}</td>
                             <td>{jogador.stats.golos}</td>
-                            <td>{jogador.valor_mercado} m €</td> {/* Aqui está bem agora */}
+                            <td>{jogador.valor_mercado} m €</td>
                             <td>{jogador.stats.assistencias}</td>
                             <td>{jogador.stats.cartoes_amarelos}</td>
                             <td>{jogador.stats.cartoes_vermelhos}</td>

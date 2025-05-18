@@ -5,7 +5,7 @@ import axios from "axios";
 
 const Profile = () => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true); // Mantém o loading a true enquanto não sabemos o estado
+  const [loading, setLoading] = useState(true);
   const USER_URL = 'http://localhost:8000/autenticacao/api/user/';
   const LOGOUT_URL = 'http://localhost:8000/autenticacao/api/logout/';
   const navigate = useNavigate();
@@ -51,7 +51,7 @@ const Profile = () => {
       .catch(err => console.error('Logout failed:', err));
   };
 
-  if (loading) return <p>A verificar sessão...</p>;  // Exibe enquanto estamos a carregar os dados
+  if (loading) return <p>A verificar sessão...</p>;
 
   return (
     <div className="perfil">

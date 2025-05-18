@@ -27,7 +27,7 @@ function Forms() {
     const fetchForm = async () => {
       try {
         const res = await axios.get(`http://localhost:8000/forms/api/formulario/`);
-        const form = res.data;  // Ajusta se for array ou object direto
+        const form = res.data;
 
         setQuestions(form.questoes || []);
       } catch (err) {

@@ -104,7 +104,7 @@ function Carrinho() {
         <div className="detalhes-produto">
          <CarrinhoBilhetes />
          </div>
-</div >
+    </div >
     );
 }
 

@@ -8,8 +8,6 @@ function AddBilhetes() {
     const [bilhetes, setBilhetes] = useState([]);
 
 
-
-
  function getCSRFToken() {
         return document.cookie.split('; ').find(row => row.startsWith('csrftoken='))?.split('=')[1];
     }
@@ -22,9 +20,6 @@ function AddBilhetes() {
             })
             .catch(error => console.error("Erro ao buscar bilhetes:", error.message));
     }, [bilhetesId]);
-
-
-
 
 
     const adicionarAoCarrinho = (bilheteId) => {

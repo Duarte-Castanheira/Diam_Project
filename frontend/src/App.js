@@ -50,7 +50,6 @@ function App() {
         <Route path="/jogo/:convocatoriaId" element={<Convocatoria/>} />
         <Route path="/carrinho" element={<Carrinho/>} />
         <Route path="/bilhetes/:bilheteId" element={<AddBilhetes/>} />
-
       </Routes>
       <Footer />
     </>

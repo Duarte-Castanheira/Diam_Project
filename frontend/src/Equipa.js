@@ -2,12 +2,11 @@ import React, { useState, useEffect } from 'react';
 import './styles.css';
 import axios from 'axios';
 
-// 👉 Função para calcular idade com base na data de nascimento
 export function calcularIdade(dataNascimento) {
-  const hoje = new Date();
-  const nascimento = new Date(dataNascimento);
-  let idade = hoje.getFullYear() - nascimento.getFullYear();
-  const mes = hoje.getMonth() - nascimento.getMonth();
+    const hoje = new Date();
+    const nascimento = new Date(dataNascimento);
+    let idade = hoje.getFullYear() - nascimento.getFullYear();
+    const mes = hoje.getMonth() - nascimento.getMonth();
 
   if (mes < 0 || (mes === 0 && hoje.getDate() < nascimento.getDate())) {
     idade--;
@@ -16,7 +15,6 @@ export function calcularIdade(dataNascimento) {
   return idade;
 }
 
-// 👉 Função para formatar a data no estilo "1 de janeiro de 2000"
 export function formatarData(data) {
   const dataObj = new Date(data);
   const dia = dataObj.getDate();
@@ -26,7 +24,6 @@ export function formatarData(data) {
   return `${dia} de ${mes} de ${ano}`;
 }
 
-// 👉 Componente principal
 function Equipa() {
   const [playerList, setPlayerList] = useState([]);
   const EQUIPA_URL = 'http://localhost:8000/jogador/api/jogadores/';

@@ -201,16 +201,15 @@ form button:hover {
   z-index: 999;
 }
 
-/* Conteúdo da modal */
 .modal-content {
   background-color: white;
   padding: 2rem;
   border-radius: 10px;
-  width: 300px; /* Largura fixada */
-  max-width: 40%; /* Garante que em telas menores a modal não ultrapasse a tela */
+  width: 300px;
+  max-width: 40%;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  max-height: 90%; /* Limita a altura da modal */
-  overflow-y: auto; /* Caso o conteúdo ultrapasse a altura, aparece um scroll */
+  max-height: 90%;
+  overflow-y: auto;
 }
 
 
@@ -227,7 +226,7 @@ form button:hover {
   border-radius: 5px;
 }
 
-/* Botões */
+
 .modal-content button {
   margin-top: 1rem;
   padding: 0.6rem 1.2rem;
@@ -545,7 +544,7 @@ margin: 1rem;
 
 .jogador-card {
   width: 250px;
-  min-height: 500px; /* força todos os cartões a terem pelo menos esta altura */
+  min-height: 500px;
   background-color: #fff;
   padding: 15px;
   border-radius: 8px;
@@ -572,7 +571,7 @@ margin: 1rem;
   grid-template-rows: auto 40px 30px 60px auto 40px 30px;
   align-items: start;
   text-align: center;
-  height: 550px; /* força todos os cartões a mesma altura geral */
+  height: 550px;
 }
 
 .jogador-imagem {
@@ -758,7 +757,7 @@ margin: 1rem;
 
 .noticia-texto {
     margin-top: 0.75rem;
-    padding-left: 140px; /* para alinhar por baixo do texto e não da imagem */
+    padding-left: 140px;
 }
 
 /* Estatisticas.css */
@@ -812,8 +811,8 @@ margin: 1rem;
 .slideshow-wrapper {
   display: flex;
   justify-content: center;
-  align-items: flex-start; /* ou center, se quiser um meio ajustado */
-  padding-bottom: 40px; /* espaço em cima e em baixo */
+  align-items: flex-start;
+  padding-bottom: 40px;
 }
 
 .slideshow-container {
@@ -842,7 +841,7 @@ margin: 1rem;
 
 
 .form-container {
-  background-color: #f9f9d7; /* mantém a cor do body */
+  background-color: #f9f9d7;
   max-width: 600px;
   margin: 40px auto;
   padding: 30px 25px;

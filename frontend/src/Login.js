@@ -28,10 +28,10 @@ function Login() {
     withCredentials: true
   })
     .then(() => {
-      setUser(''); // Limpa os campos
+      setUser('');
       setPassword('');
       console.log("autenticado com sucesso");
-      navigate('/perfil'); // Navega só após login com sucesso
+      navigate('/perfil');
     })
     .catch(err => console.error('Login failed:', err));
 };

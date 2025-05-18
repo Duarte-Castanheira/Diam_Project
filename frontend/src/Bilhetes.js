@@ -11,7 +11,6 @@ function Bilhetes() {
 
   const USER_URL = 'http://localhost:8000/autenticacao/api/user';
 
-
     useEffect(() => {
     axios.get(USER_URL, { withCredentials: true })
     .then(res => {
@@ -24,8 +23,6 @@ function Bilhetes() {
         setLoading(false);
         });
     }, []);
-
-
 
 
   useEffect(() => {
@@ -43,7 +40,7 @@ function Bilhetes() {
 };
 
 
-if (!user && !loading) {
+    if (!user && !loading) {
         return (
             <div className="detalhes-produto">
                 <img src="/perfil_clube.png" alt="Logotipo do clube" className="logo-clube" />
@@ -52,8 +49,8 @@ if (!user && !loading) {
                     Ir para Login
                 </button>
             </div>
-    );
-  }
+        );
+    }
 
   return (
     <div className="bilhetes">
@@ -76,8 +73,6 @@ if (!user && !loading) {
           ))
         )}
       </div>
-
-
     </div>
   );
 }
