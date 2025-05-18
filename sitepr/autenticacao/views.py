@@ -11,6 +11,8 @@ from jogos.models import Bilhete
 
 from extras.serializers import ProdutoLojaSerializer
 
+from jogos.serializers import BilheteSerializer
+
 
 @ensure_csrf_cookie
 @api_view(['POST',])
@@ -64,9 +66,10 @@ def logout_view(request):
 def user_view(request):
     user = request.user
     carrinho_serializado = ProdutoLojaSerializer(user.carrinho.all(), many=True)
+    carrinho_bilhete_serializado = BilheteSerializer(user.carrinho_bilhete.all(), many=True)
     if request.method == 'GET':
         return Response({'username': user.username, 'email': user.email, 'first_name': user.first_name,
-            'last_name': user.last_name, 'telemovel': user.telemovel, 'nascimento': user.nascimento,'carrinho': carrinho_serializado.data})
+            'last_name': user.last_name, 'telemovel': user.telemovel, 'nascimento': user.nascimento,'carrinho': carrinho_serializado.data, 'carrinho_bilhete': carrinho_bilhete_serializado.data})
 
     elif request.method == 'PUT':
         data = request.data
@@ -136,48 +139,48 @@ def update_carrinho(request):
 @permission_classes([IsAuthenticated])
 def update_carrinho_bilhete(request):
     user = request.user
-
     if request.method == 'GET':
         serializer = CustomUserSerializer(user)
         return Response(serializer.data)
 
     elif request.method == 'POST':
-        bilhetes_ids = request.data.get('carrinho_bilhete', [])
+
+        bilhetes_ids = request.data.get('carrinho', [])
 
         if not isinstance(bilhetes_ids, list):
-            return Response({'error': 'O campo "carrinho_bilhete" deve ser uma lista de IDs de bilhetes.'}, status=400)
+            return Response({'error': 'O campo "carrinho" deve ser uma lista de IDs de produtos.'}, status=400)
 
-        user.carrinho_bilhete.clear()
+        user.carrinho_bilhete.clear()  # <- limpa tudo
 
         bilhetes = Bilhete.objects.filter(id__in=bilhetes_ids)
 
         for bilhete in bilhetes:
             if bilhete.stock > 0:
-                bilhete.stock -= 1  # Reduz o stock
+                bilhete.stock -= 1  # reduz o stock
                 bilhete.save()
-                user.carrinho_bilhete.add(bilhete)  # Adiciona o bilhete ao carrinho
+                user.carrinho_bilhete.add(bilhete)
             else:
-                return Response({'error': f'Stock insuficiente para o bilhete com ID {bilhete.id}.'}, status=400)
+                return Response({'error': f'Stock insuficiente para o produto {bilhete.bancada}.'}, status=400)
 
         user.save()
-        return Response({'success': 'Carrinho de bilhetes atualizado com sucesso.'})
+
+        return Response({'success': 'Carrinho atualizado com sucesso.'})
 
     elif request.method == 'DELETE':
-        bilhete_id = request.data.get('bilhete')
+
+        bilhete_id = request.data.get('produto_id')
 
         if not bilhete_id:
-            return Response({'error': 'Falta o parâmetro "bilhete" no pedido.'}, status=400)
+            return Response({'error': 'Falta o produto_id no pedido.'}, status=400)
 
         try:
             bilhete = Bilhete.objects.get(id=bilhete_id)
         except Bilhete.DoesNotExist:
-            return Response({'error': 'Bilhete não encontrado.'}, status=404)
+            return Response({'error': 'Produto não encontrado.'}, status=404)
 
-        if bilhete in user.carrinho_bilhete.all():
-            user.carrinho_bilhete.remove(bilhete)
-            bilhete.stock += 1
-            bilhete.save()
-            user.save()
-            return Response({'success': 'Bilhete removido do carrinho e stock atualizado com sucesso.'})
-        else:
-            return Response({'error': 'Bilhete não está no carrinho.'}, status=400)
+        user.carrinho_bilhete.remove(bilhete)
+        bilhete.stock += 1
+        bilhete.save()
+        user.save()
+
+        return Response({'success': 'Produto removido do carrinho e stock atualizado com sucesso.'})

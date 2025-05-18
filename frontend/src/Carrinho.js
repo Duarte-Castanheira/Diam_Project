@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
+import CarrinhoBilhetes from './CarrinhoBilhetes';
 function Carrinho() {
     const [carrinho, setCarrinho] = useState([]);
     const [user, setUser] = useState(null);
@@ -77,7 +77,9 @@ function Carrinho() {
                     ))}
                 </div>
             )}
+         <CarrinhoBilhetes />
         </div>
+
     );
 }
 

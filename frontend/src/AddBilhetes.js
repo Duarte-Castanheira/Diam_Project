@@ -10,8 +10,13 @@ function AddBilhetes() {
     const [user, setUser] = useState(null);
 
 
+
     const USER_URL = 'http://localhost:8000/autenticacao/api/user';
     const UPDATE_CARRINHO_URL = 'http://localhost:8000/autenticacao/api/atualizar_carrinho';
+
+ function getCSRFToken() {
+        return document.cookie.split('; ').find(row => row.startsWith('csrftoken='))?.split('=')[1];
+    }
 
     useEffect(() => {
         axios.get(`http://localhost:8000/jogos/api/jogo/${bilhetesId}/bilhetes/`)
@@ -42,35 +47,43 @@ function AddBilhetes() {
         .catch(err => console.error("Erro ao atualizar carrinho:", err));
     };
 
-    const adicionarAoCarrinho = (bilhete) => {
-    // Verifica se já está no carrinho para não duplicar
-    if (carrinho.some(b => b.id === bilhete.id)) return;
+    const adicionarAoCarrinho = (bilheteId) => {
+  let carrinhoAtual = JSON.parse(localStorage.getItem('carrinho_bilhete')) || [];
 
-    const novoCarrinho = [...carrinho, bilhete];
-    setCarrinho(novoCarrinho);
+  if (!carrinhoAtual.includes(bilheteId)) {
+    carrinhoAtual.push(bilheteId);
+  }
 
-    const ids = novoCarrinho.map(b => b.id);
-    atualizarCarrinhoNoServidor(ids);
+  localStorage.setItem('carrinho_bilhete', JSON.stringify(carrinhoAtual));
+
+  axios.post('http://localhost:8000/autenticacao/api/user/carrinho/bilhete', {
+    carrinho: carrinhoAtual
+  }, {
+    headers: {
+      'X-CSRFToken': getCSRFToken()
+    },
+    withCredentials: true
+  })
+  .then(res => {
+    alert(res.data.success);
+  })
+  .catch(err => {
+    console.error(err.response?.data || err);
+    alert("Erro ao adicionar ao carrinho.");
+  });
 };
 
   return (
-    <div className="addBilhetes">
-      <h1>Bilhetes Disponíveis</h1>
-      <div className="bilhete-lista">
-        {bilhetes.length === 0 ? (
-          <p>Sem bilhetes disponíveis para este jogo.</p>
-        ) : (
-          bilhetes.map((bilhete) => (
-            <div key={bilhete.pk} className="card-bilhete">
-              <h3>Setor: {bilhete.setor}</h3>
-              <p><strong>Preço:</strong> €{bilhete.preco}</p>
-              <p><strong>Bancada:</strong> {bilhete.bancada}</p>
-              <p><strong>Bilhtes disponiveis:</strong> {bilhete.stock}</p>
-              <button onClick={() => adicionarAoCarrinho(bilhete)}>Adicionar ao carrinho</button>
-            </div>
-          ))
-        )}
-      </div>
+    <div className="detalhes-produto">
+      <h2>Bilhete Disponivel:</h2>
+      {bilhetes.map(bilhete => (
+  <div key={bilhete.pk} className="detalhes-produto">
+    <p><strong>Preço:</strong> €{bilhete.preco}</p>
+    <p><strong>Bancada:</strong> {bilhete.bancada}</p>
+    <p><strong>Stock:</strong> {bilhete.stock}</p>
+    <button onClick={() => adicionarAoCarrinho(bilhete.pk)}>Adicionar ao Carrinho</button>
+  </div>
+))}
     </div>
   );
 }
