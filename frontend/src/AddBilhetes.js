@@ -4,22 +4,26 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 
 function AddBilhetes() {
-  const [bilhetes, setBilhetes] = useState([]);
+    const { bilhetesId } = useParams();
+    const [bilhetes, setBilhetes] = useState([]);
     const [carrinho, setCarrinho] = useState([]);
     const [user, setUser] = useState(null);
 
-    const BILHETES_URL = 'http://localhost:8000/extras/api/produtos';
+
     const USER_URL = 'http://localhost:8000/autenticacao/api/user';
     const UPDATE_CARRINHO_URL = 'http://localhost:8000/autenticacao/api/atualizar_carrinho';
 
     useEffect(() => {
-        axios.get(BILHETES_URL)
-            .then(response => setBilhetes(response.data))
+        axios.get(`http://localhost:8000/jogos/api/jogo/${bilhetesId}/bilhetes/`)
+            .then(response => {
+                console.log("Bilhetes recebidos:", response.data);
+                setBilhetes(response.data);
+            })
             .catch(error => console.error("Erro ao buscar bilhetes:", error.message));
     }, []);
 
     useEffect(() => {
-        axios.get(USER_URL)
+        axios.get(USER_URL, { withCredentials: true })
             .then(res => {
                 setUser(res.data);
                 setCarrinho(res.data.carrinho || []);
@@ -60,9 +64,8 @@ function AddBilhetes() {
             <div key={bilhete.pk} className="card-bilhete">
               <h3>Setor: {bilhete.setor}</h3>
               <p><strong>Preço:</strong> €{bilhete.preco}</p>
-              <p><strong>Fila:</strong> {bilhete.fila}</p>
-              <p><strong>Lugar:</strong> {bilhete.lugar}</p>
-              <p><strong>Número:</strong> {bilhete.numero}</p>
+              <p><strong>Bancada:</strong> {bilhete.bancada}</p>
+              <p><strong>Bilhtes disponiveis:</strong> {bilhete.stock}</p>
               <button onClick={() => adicionarAoCarrinho(bilhete)}>Adicionar ao carrinho</button>
             </div>
           ))

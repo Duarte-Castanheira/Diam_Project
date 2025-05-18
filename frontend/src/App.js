@@ -44,10 +44,10 @@ function App() {
         <Route path="/estatisticas" element={<Estatisticas/>} />
         <Route path="/produto/:produtoId" element={<DetalhesProduto />} />
         <Route path="/bilhetes" element={<Bilhetes/>} />
-        <Route path="/jogo/:pk" element={<AddBilhetes />} />
+        <Route path="/jogo/:bilhetesId/bilhetes" element={<AddBilhetes />} />
         <Route path= "/perfil/carrinho" element={<Carrinho />} />
         <Route path="/jogos" element={<Jogos/>} />
-        <Route path="/convocatoria/:convocatoriaId" element={<Convocatoria/>} />
+        <Route path="/jogo/:convocatoriaId" element={<Convocatoria/>} />
         <Route path="/carrinho" element={<Carrinho/>} />
         <Route path="/bilhetes/:bilheteId" element={<AddBilhetes/>} />
 

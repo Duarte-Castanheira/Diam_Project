@@ -1,26 +1,44 @@
 from django.contrib import admin
-from .models import Jogo, Convocatoria, Bilhete
+from django.utils.html import format_html
+
+from .models import Jogo, Convocatoria, Bilhete, Adversario
 
 @admin.register(Jogo)
 class JogoAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'data', 'hora', 'adversario', 'resultado', 'local', 'bilhetes_vendidos', 'bilhetes_maximos')
-    search_fields = ('adversario', 'local')
+    list_display = ('pk', 'data', 'hora', 'adversario', 'resultado', 'local', 'bilhetes_vendidos', 'bilhetes_maximos', 'imagem_preview', 'convocatoria')
+    search_fields = ('adversario__nome', 'local')
     list_filter = ('data', 'local')
     ordering = ('-data', 'hora')
 
+    def imagem_preview(self, obj):
+        if obj.imagem:
+            return format_html('<img src="{}" width="50" style="border-radius: 4px;" />', obj.imagem.url)
+        return "Sem imagem"
+    imagem_preview.short_description = 'Imagem'
+
+
+@admin.register(Adversario)
+class AdversarioAdmin(admin.ModelAdmin):
+    list_display = ('pk', 'nome', 'imagem_preview')
+    search_fields = ('nome',)
+
+    def imagem_preview(self, obj):
+        if obj.imagem:
+            return format_html('<img src="{}" width="50" style="border-radius: 4px;" />', obj.imagem.url)
+        return "Sem imagem"
+    imagem_preview.short_description = 'Imagem'
+
+
 @admin.register(Convocatoria)
 class ConvocatoriaAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'jogo_display')
+    list_display = ('pk',)
     filter_horizontal = ('jogadores',)
 
-    def jogo_display(self, obj):
-        return f"Jogo #{obj.jogo.pk} - {obj.jogo.adversario}"
-    jogo_display.short_description = 'Jogo'
 
 @admin.register(Bilhete)
 class BilheteAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'jogo', 'preco', 'setor', 'fila', 'lugar', 'numero')
-    search_fields = ('setor',)
-    list_filter = ('setor', 'preco')
-    ordering = ('jogo', 'setor', 'fila', 'lugar')
-    fields = ('jogo', 'preco', 'setor', 'fila', 'lugar', 'numero')
+    list_display = ('pk', 'jogo', 'preco', 'bancada', 'stock')
+    search_fields = ('bancada',)
+    list_filter = ('bancada', 'preco','stock')
+    ordering = ('jogo', 'bancada', 'preco')
+    fields = ('jogo', 'preco', 'bancada','stock')

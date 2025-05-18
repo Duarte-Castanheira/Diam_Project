@@ -57,24 +57,15 @@ function Carrinho() {
     };
 
 
-    const removerDoCarrinho = (produtoId) => {
-        const novoCarrinho = carrinho.filter(p => p.pk !== produtoId);
-        setCarrinho(novoCarrinho);
+  const removerDoCarrinho = (produtoId) => {
+  let carrinhoAtual = JSON.parse(localStorage.getItem('carrinho')) || [];
+  carrinhoAtual = carrinhoAtual.filter(id => id !== produtoId);
+  localStorage.setItem('carrinho', JSON.stringify(carrinhoAtual));
+  atualizarCarrinhoNoServidor(carrinhoAtual);
 
-        axios.delete(UPDATE_CARRINHO_URL, {
-            headers: {
-                'X-CSRFToken': getCSRFToken()
-            },
-            data: { produto_id: produtoId },
-            withCredentials: true
-        })
-        .then(() => {
-            console.log('Produto removido do carrinho e stock atualizado no servidor.');
-        })
-        .catch(err => {
-            console.error('Erro ao remover produto do carrinho:', err);
-        });
-    };
+  setCarrinho(carrinhoAtual.map(id => produtos.find(p => p.pk === id)).filter(Boolean));
+
+};
 
     return (
         <div className="detalhes-produto">

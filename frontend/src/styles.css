@@ -388,15 +388,41 @@ form button:hover {
     text-align: center;
     font-family: Arial, sans-serif;
     padding: 20px;
+    background-color: #f9f7d7;
 }
 
+.bilhetes h1 {
+    font-family: emoji;
+    font-weight: bold;
+    padding-top:10px;
+    color: #23590f;
+}
 .jogos-lista {
+    background-color: #f9f7d7;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     gap: 20px;
-    margin-top: 30px;
+    margin-bottom: 30px;
 }
+
+.jogos-lista button{
+    margin: 1rem;
+    padding: 0.6rem 1.2rem;
+    background-color: #016c40;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+margin: 1rem;
+  padding: 0.6rem 1.2rem;
+  background-color: #016c40;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 
 .card-jogo {
     background-color: #ffffff;
@@ -464,8 +490,9 @@ form button:hover {
   justify-content: center;
   gap: 20px;
   padding: 20px;
-  background-color: #f9f9f9;
+  background-color: #f9f7d7;
 }
+
 
 .jogador-card {
   width: 250px;
@@ -725,18 +752,19 @@ form button:hover {
 }
 
 .table-title {
-  font-size: 28px;
-  font-weight: 600;
-  color: #2c3e50;
-  margin-bottom: 20px;
-  text-align: center;
+    text-align: center;
+    font-family: emoji;
+    font-weight: bold;
+    padding-top:10px;
+    color: #23590f;
+
 }
 
 .slideshow-wrapper {
   display: flex;
   justify-content: center;
   align-items: flex-start; /* ou center, se quiser um meio ajustado */
-  padding: 40px 0; /* espaço em cima e em baixo */
+  padding-bottom: 40px; /* espaço em cima e em baixo */
 }
 
 .slideshow-container {

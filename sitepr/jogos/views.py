@@ -20,6 +20,18 @@ def jogos_list(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+@api_view(['GET'])
+def proximos_jogos(request):
+    jogos = Jogo.objects.filter(resultado__exact='')
+    serializer = JogoSerializer(jogos, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def ultimos_jogos(request):
+    jogos = Jogo.objects.exclude(resultado__exact='')
+    serializer = JogoSerializer(jogos, many=True)
+    return Response(serializer.data)
+
 @api_view(['GET', 'PUT', 'DELETE'])
 def jogo_detail(request, pk):
     try:
@@ -77,7 +89,7 @@ def convocatoria_detail(request, convocatoria_id):
 
 
 @api_view(['GET', 'POST'])
-def bilhete_list(request):
+def bilhetes_list(request):
     if request.method == 'GET':
         bilhetes = Bilhete.objects.all()
         serializer = BilheteSerializer(bilhetes, many=True)
@@ -111,7 +123,7 @@ def bilhete_detail(request, pk):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 @api_view(['GET'])
-def bilhetes_por_jogo(request, bilhete_id):
-    bilhetes = Bilhete.objects.filter(jogo_id=bilhete_id)
+def bilhetes_por_jogo(request, jogo_id):
+    bilhetes = Bilhete.objects.filter(jogo_id=jogo_id)
     serializer = BilheteSerializer(bilhetes, many=True)
     return Response(serializer.data)

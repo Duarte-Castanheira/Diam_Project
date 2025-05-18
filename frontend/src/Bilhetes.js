@@ -8,15 +8,18 @@ function Bilhetes() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get("http://localhost:8000/jogos/api/jogos/")
+    axios.get("http://localhost:8000/jogos/api/jogos/proximos")
       .then(response => setJogos(response.data))
       .catch(error => console.error("Erro ao buscar jogos:", error.message));
   }, []);
 
-  const abrirDetalhesBilhetes = (id) => {
-    navigate(`/bilhetes/${id}`);
-    console.log(id);
-  };
+  const abrirDetalhesBilhetes = (jogo) => {
+  if (jogo.resultado) {
+    alert("O jogo já acabou!");
+    return; // Sai da função, não redireciona
+  }
+  navigate(`/jogo/${jogo.pk}/bilhetes`);
+};
 
   return (
     <div className="bilhetes">
@@ -29,10 +32,10 @@ function Bilhetes() {
             <div
               key={jogo.pk}
               className="card-jogo"
-              onClick={() => abrirDetalhesBilhetes(jogo.pk)}
+              onClick={() => abrirDetalhesBilhetes(jogo)}
               style={{ cursor: "pointer" }}
             >
-              <h3>GD Estrela do Minho <br /> vs <br /> {jogo.adversario}</h3>
+              <h3>GD Estrela do Minho <br /> vs <br /> {jogo.adversario.nome}</h3>
               <p><strong>Data:</strong> {jogo.data}</p>
               <p><strong>Local:</strong> {jogo.local}</p>
             </div>

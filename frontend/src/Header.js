@@ -18,7 +18,7 @@ function Header() {
     return (
         <div className="header">
             <a className="logo-link" href="/" >
-                <img src="/logo.png" alt="Logotipo do clube" />
+                <img src="/logo_clube.png" alt="Logotipo do clube" />
             </a>
 
             <div className="navbar">

@@ -5,7 +5,7 @@ class ProdutoLoja(models.Model):
     descricao = models.TextField()
     preco = models.IntegerField(default=0)
     stock = models.IntegerField(default=0)
-    imagem = models.ImageField(upload_to='Produtos/', default='Produtos/logo.png')
+    imagem = models.ImageField(upload_to='Produtos/', default='Produtos/logo_clube.png')
 
     def __str__(self):
         return self.nome
@@ -14,4 +14,4 @@ class Noticia(models.Model):
     titulo = models.CharField(max_length=200)
     data = models.DateField()
     noticia_texto = models.TextField()
-    imagem = models.ImageField(upload_to='Noticias/', default='Noticias/logo.png')
+    imagem = models.ImageField(upload_to='Noticias/', default='Noticias/logo_clube.png')

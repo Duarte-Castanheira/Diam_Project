@@ -26,7 +26,12 @@ function Slideshow() {
     return () => clearInterval(interval);
   }, [noticias]);
 
-  if (noticias.length === 0) return null;
+    if (noticias.length === 0)
+        return (
+            <div className="slideshow-wrapper">
+                <p>Não existem notícias disponíveis.</p>
+            </div>
+        );
 
   const noticia = noticias[currentIndex];
   const imagemUrl = noticia.imagem.startsWith("http")
@@ -39,7 +44,6 @@ function Slideshow() {
         className="slideshow-container"
         onClick={() => navigate('/Noticias/')}
       >
-        <h2 style={{color:'#23590f'}}>Últimas Notícias:</h2>
         <h4 className="slideshow-title">{noticia.titulo}</h4>
         <img
           src={imagemUrl}

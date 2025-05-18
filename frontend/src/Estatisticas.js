@@ -35,7 +35,7 @@ function Estatisticas() {
         }, []);
 
     return (
-        <div>
+        <div style={{backgroundColor: '#f9f7d7'}}>
             <h2 className="table-title">Estatísticas dos Jogadores</h2>
             <Table className="stats-table" bordered>
                 <thead>
