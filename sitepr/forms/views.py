@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
-from .serializers import * # (1)
+from .serializers import *  # (1)
 from .serializers import InqueritoSerializer
 
 
@@ -90,15 +90,52 @@ def InqueritoList(request):
     serializer = InqueritoSerializer(inqueritos, many=True)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def InqueritoDetail(request, pk):
+    inquerito = get_object_or_404(Inquerito, pk=pk)
+    serializer = InqueritoSerializer(inquerito)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def InqueritoCreate(request):
+    serializer = InqueritoSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+def listar_inqueritos(request):
+    inqueritos = Inquerito.objects.all()
+    return render(request, 'inqueritos/listar_inqueritos.html', {'inqueritos': inqueritos})
+
+
+
+@api_view(['GET'])
 def responder_inquerito(request, id_inquerito):
-    inquerito = get_object_or_404(Inquerito, id=id_inquerito)
+    try:
+        inquerito = Inquerito.objects.get(id=id_inquerito)
+    except Inquerito.DoesNotExist:
+        return Response({"erro": "Inquérito não encontrado"}, status=404)
+
     perguntas = inquerito.perguntas.all()
+    data = {
+        "id": inquerito.id,
+        "titulo": inquerito.titulo,
+        "descricao": inquerito.descricao,
+        "perguntas": [{"id": p.id, "texto_pergunta": p.texto_pergunta} for p in perguntas]
+    }
+    return Response(data)
 
-    if request.method == 'POST':
-        for pergunta in perguntas:
-            resposta = request.POST.get(f'pergunta_{pergunta.id}')
-            if resposta:
-                Resposta.objects.create(pergunta=pergunta, resposta_texto=resposta)
-        return redirect('listar_inqueritos')
 
-    return render(request, 'inqueritos/responder_inquerito.html', {'inquerito': inquerito, 'perguntas': perguntas})
+
+@api_view(['POST'])
+def guardarResposta(request):
+    pergunta_id = request.data.get("pergunta")
+    resposta_texto = request.data.get("resposta_texto")
+    resposta = Resposta.objects.create(
+        pergunta_id=pergunta_id,
+        resposta_texto=resposta_texto
+    )
+    return Response({"status": "resposta guardada", "id": resposta.id})

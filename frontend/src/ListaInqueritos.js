@@ -1,22 +1,31 @@
-import './styles.css';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
-function ListInqueritos({ inqueritos }) {
-    return (
-        <>
-            <h1>Lista de Inquéritos</h1>
-            <ul>
-                {inqueritos && inqueritos.length > 0 ? (
-                    inqueritos.map((inquerito) => (
-                        <li key={inquerito.id}>
-                            <a href={`${inquerito.id}/responder/`}>{inquerito.titulo}</a>
-                        </li>
-                    ))
-                ) : (
-                    <p>Nenhum inquérito disponível.</p>
-                )}
-            </ul>
-        </>
-    );
+function ListaInqueritos() {
+  const [inqueritos, setInqueritos] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:8000/forms/inqueritos/')
+      .then(res => {
+        setInqueritos(res.data);
+      })
+      .catch(err => {
+        console.error('Erro ao buscar inquéritos:', err);
+      });
+  }, []);
+
+  return (
+    <div>
+      <h2>Lista de Inquéritos</h2>
+      <ul>
+        {inqueritos.map(inq => (
+          <li key={inq.id}>
+            <a href={`/${inq.id}/responder/`}>{inq.titulo}</a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
 
-export default ListInqueritos;
+export default ListaInqueritos;

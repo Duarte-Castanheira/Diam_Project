@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Questao, Opcao, Inquerito
+from .models import Questao, Opcao, Inquerito, Pergunta
 
 class QuestaoSerializer(serializers.ModelSerializer):
     class Meta:
@@ -11,7 +11,15 @@ class OpcaoSerializer(serializers.ModelSerializer):
         model = Opcao
         fields = ('pk', 'questao', 'opcao_texto', 'votos')
 
+class PerguntaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Pergunta
+        fields = ['id', 'texto_pergunta']
+
 class InqueritoSerializer(serializers.ModelSerializer):
+    perguntas = PerguntaSerializer(many=True, read_only=True)
+
     class Meta:
         model = Inquerito
-        fields = ['id', 'titulo', 'descricao', 'criado_em']
+        fields = ['id', 'titulo', 'descricao', 'perguntas', 'criado_em']
+

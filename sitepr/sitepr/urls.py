@@ -19,14 +19,16 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 
+
+app_name = 'forms'
+
 urlpatterns = [
-    path('forms/', include('forms.urls')),
+    path('forms/', include(('forms.urls', 'forms'), namespace='forms')),
     path('jogos/', include('jogos.urls')),
     path('jogador/', include('jogador.urls')),
     path('extras/', include('extras.urls')),
     path('admin/', admin.site.urls),
     path('autenticacao/', include('autenticacao.urls')),
-    path('api/', include('forms.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

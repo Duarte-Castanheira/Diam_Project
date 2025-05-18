@@ -26,7 +26,7 @@ class OpcaoAdmin(admin.ModelAdmin):
 
 @admin.register(Inquerito)
 class InqueritoAdmin(admin.ModelAdmin):
-    list_display = ['titulo', 'descricao']
+    list_display = ['id', 'titulo', 'descricao', 'criado_em']
 
 
 

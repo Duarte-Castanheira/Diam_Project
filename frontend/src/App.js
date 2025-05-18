@@ -23,6 +23,7 @@ import Jogos from "./Jogos";
 import Convocatoria from "./Convocatoria";
 import ListaInqueritos from "./ListaInqueritos";
 import ResponderInqueritos from "./ResponderInqueritos";
+import InqueritosPage from "./InqueritosPage";
 
 function App() {
   return (
@@ -50,9 +51,9 @@ function App() {
         <Route path="/convocatoria/:convocatoriaId" element={<Convocatoria/>} />
         <Route path="/carrinho" element={<Carrinho/>} />
         <Route path="/bilhetes/:bilheteId" element={<AddBilhetes/>} />
+        <Route path="/inquerito" element={<InqueritosPage/>} />
         <Route path="/ListaInqueritos" element={<ListaInqueritos/>} />
-        <Route path="/ResponderInqueritos" element={<ResponderInqueritos/>} />
-        <Route path="/:id/responder/" element={<ResponderInqueritos />} />
+        <Route path="/forms/:id_inquerito/responder/" element={<ResponderInqueritos />} />
 
 
       </Routes>
