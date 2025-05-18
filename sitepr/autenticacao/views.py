@@ -150,37 +150,37 @@ def update_carrinho_bilhete(request):
         if not isinstance(bilhetes_ids, list):
             return Response({'error': 'O campo "carrinho" deve ser uma lista de IDs de produtos.'}, status=400)
 
-        user.carrinho_bilhete.clear()  # <- limpa tudo
+        # Em vez de limpar o carrinho, só adiciona os que ainda não tens
+        bilhetes_existentes = set(user.carrinho_bilhete.values_list('id', flat=True))
 
-        bilhetes = Bilhete.objects.filter(id__in=bilhetes_ids)
+        bilhetes_para_adicionar = Bilhete.objects.filter(id__in=bilhetes_ids).exclude(id__in=bilhetes_existentes)
 
-        for bilhete in bilhetes:
+        for bilhete in bilhetes_para_adicionar:
             if bilhete.stock > 0:
-                bilhete.stock -= 1  # reduz o stock
+                bilhete.stock -= 1
                 bilhete.save()
                 user.carrinho_bilhete.add(bilhete)
             else:
-                return Response({'error': f'Stock insuficiente para o produto {bilhete.bancada}.'}, status=400)
+                return Response({'error': f'Stock insuficiente para o bilhete {bilhete.bancada}.'}, status=400)
 
         user.save()
-
-        return Response({'success': 'Carrinho atualizado com sucesso.'})
+        return Response({'success': 'Bilhetes adicionados ao carrinho com sucesso.'})
 
     elif request.method == 'DELETE':
 
-        bilhete_id = request.data.get('produto_id')
+        bilhete_id = request.data.get('bilhete')
 
         if not bilhete_id:
-            return Response({'error': 'Falta o produto_id no pedido.'}, status=400)
+            return Response({'error': 'Falta o bilhete no pedido.'}, status=400)
 
         try:
             bilhete = Bilhete.objects.get(id=bilhete_id)
         except Bilhete.DoesNotExist:
-            return Response({'error': 'Produto não encontrado.'}, status=404)
+            return Response({'error': 'bilhete não encontrado.'}, status=404)
 
         user.carrinho_bilhete.remove(bilhete)
         bilhete.stock += 1
         bilhete.save()
         user.save()
 
-        return Response({'success': 'Produto removido do carrinho e stock atualizado com sucesso.'})
+        return Response({'success': 'bilhete removido do carrinho e stock atualizado com sucesso.'})

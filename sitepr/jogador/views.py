@@ -54,6 +54,7 @@ def estatistica_list(request):
             "id": estat.jogador.id,
             "nome": estat.jogador.nome,
             "posicao": estat.jogador.posicao,
+            "valor_mercado": estat.jogador.valor_mercado,
             "stats": {
                 "numero_jogos": estat.numero_jogos,
                 "golos": estat.golos,

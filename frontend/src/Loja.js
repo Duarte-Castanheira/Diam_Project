@@ -4,7 +4,26 @@ import axios from "axios";
 import {Link} from "react-router-dom";
 
 function Loja() {
-  const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [user, setUser] = useState(null);
+
+
+    const USER_URL = 'http://localhost:8000/autenticacao/api/user';
+
+
+    useEffect(() => {
+    axios.get(USER_URL, { withCredentials: true })
+    .then(res => {
+      setUser(res.data);
+      setLoading(false);
+    })
+    .catch(err => {
+        console.error('Failed to get user:', err);
+        setUser(null);
+        setLoading(false);
+        });
+    }, []);
 
  useEffect(() => {
   axios.get("http://localhost:8000/extras/api/produtos/")
@@ -15,6 +34,19 @@ function Loja() {
       console.error("Erro ao buscar produtos:", error.message);
     });
 }, []);
+
+    if (!user && !loading) {
+        return (
+            <div className="detalhes-produto">
+                <img src="/perfil_clube.png" alt="Logotipo do clube" className="logo-clube" />
+                <h2>Inicie sessão para aceder aos bilhetes</h2>
+                <button onClick={() => window.location.href = '/login'}>
+                    Ir para Login
+                </button>
+            </div>
+    );
+  }
+
 
  return (
     <div className="loja">

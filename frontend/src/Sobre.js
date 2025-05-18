@@ -2,7 +2,8 @@ import './styles.css';
 
 function Sobre() {
     return (
-        <div className ='Sobre'>
+        <div style={{backgroundColor:'#f9f7d7'}}>
+        <div className ='sobre-container'>
             <h3>Descrição:</h3>
             <ul>
             <li>Nome: Grupo Desportivo Estrela do Minho (G.D. Estrela do Minho)</li>
@@ -15,7 +16,7 @@ function Sobre() {
 
             <h3>História:</h3>
             <ul>
-            <p>
+            <p style={{textAlign:'center'}}>
                 Fundado por um grupo de agricultores e comerciantes locais, o Estrela do Minho nasceu com o objetivo de
                 promover o desporto e a união da comunidade minhota. Inicialmente apenas com futebol, o clube tornou-se
                 conhecido pelas suas festas populares, torneios juvenis e ligação forte ao folclore e à tradição minhota.
@@ -34,8 +35,9 @@ function Sobre() {
 
             <h3>Lema:</h3>
             <ul>
-            <p>"Orgulho do Minho, força do povo."</p>
+            <p style={{textAlign:'center'}}>"Orgulho do Minho, força do povo."</p>
             </ul>
+        </div>
         </div>
     );
 }

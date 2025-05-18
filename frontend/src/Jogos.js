@@ -12,8 +12,8 @@ function Jogos() {
     useEffect(() => {
     axios.get("http://localhost:8000/jogos/api/jogos/")
         .then(response => {
-            console.log(response.data); // VERIFICA O QUE VEM
-            setJogos(response.data);
+             const jogosOrdenados = response.data.sort((a, b) => new Date(a.data) - new Date(b.data));
+            setJogos(jogosOrdenados);
         })
         .catch(error => {
             console.error("Erro ao buscar jogos:", error.message);

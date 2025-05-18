@@ -2,11 +2,9 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 function CarrinhoBilhetes() {
-    const [bilhetes, setBilhetes] = useState([]);
     const [carrinhoBilhetes, setCarrinhoBilhetes] = useState([]);
-    const [user, setUser] = useState(null);
 
-    const BILHETES_URL = 'http://localhost:8000/jogos/api/jogos';
+    const BILHETES_URL = 'http://localhost:8000/jogos/api/bilhetes';
     const USER_URL = 'http://localhost:8000/autenticacao/api/user';
     const UPDATE_CARRINHO_BILHETES_URL = 'http://localhost:8000/autenticacao/api/user/carrinho/bilhete';
 
@@ -17,12 +15,10 @@ function CarrinhoBilhetes() {
     useEffect(() => {
         axios.get(USER_URL, { withCredentials: true })
             .then(res => {
-                setUser(res.data);
                 const carrinhoBilhetesIds = (res.data.carrinho_bilhete || []).map(b => b.pk);
 
                 axios.get(BILHETES_URL, { withCredentials: true })
                     .then(resBilhetes => {
-                        setBilhetes(resBilhetes.data);
                         const bilhetesNoCarrinho = resBilhetes.data.filter(b => carrinhoBilhetesIds.includes(b.pk));
                         setCarrinhoBilhetes(bilhetesNoCarrinho);
                     })
@@ -45,17 +41,23 @@ function CarrinhoBilhetes() {
     };
 
     return (
-        <div>
-            <h2>🎟️ O teu Carrinho - Bilhetes</h2>
+        <div className="detalhes-produto">
+            <h1>Os teus Bilhetes:</h1>
             {carrinhoBilhetes.length === 0 ? (
-                <p>Carrinho de bilhetes vazio.</p>
+            <>
+                <p style={{fontFamily:"emoji"}}><strong>Carrinho de bilhetes vazio.</strong></p>
+                <button onClick={() => window.location.href = '/bilhetes'}>
+                        Comprar Bilhetes
+                    </button>
+                    </>
             ) : (
                 <ul>
                     {carrinhoBilhetes.map((bilhete, index) => (
-                        <li key={index}>
-                            Setor: {bilhete.setor} - Lugar: {bilhete.lugar} - Preço: €{bilhete.preco}
+                        <div key={index} style={{ marginBottom: '20px' }}>
+                            <h3>Bancada: {bilhete.bancada}</h3>
+                             <p>Preço: €{bilhete.preco}</p>
                             <button onClick={() => removerDoCarrinhoBilhetes(bilhete.pk)}>Remover</button>
-                        </li>
+                        </div>
                     ))}
                 </ul>
             )}

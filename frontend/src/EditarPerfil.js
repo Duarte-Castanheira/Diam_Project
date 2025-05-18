@@ -43,18 +43,20 @@ const EditarPerfil = () => {
     .catch(err => console.error(err));
   };
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <h2>Editar Perfil</h2>
-      <input type="text" name="username" value={userData.username} onChange={handleChange} placeholder="Username" />
-      <input type="text" name="first_name" value={userData.first_name} onChange={handleChange} placeholder="Primeiro Nome" />
-      <input type="text" name="last_name" value={userData.last_name} onChange={handleChange} placeholder="Último Nome" />
-      <input type="email" name="email" value={userData.email} onChange={handleChange} placeholder="Email" />
-      <input type="text" name="telemovel" value={userData.telemovel} onChange={handleChange} placeholder="Telemóvel" />
-      <input type="date" name="nascimento" value={userData.nascimento || ''} onChange={handleChange} placeholder="Nascimento" />
-      <button type="submit">Guardar</button>
-    </form>
-  );
+    return (
+        <div className="perfil">
+            <form onSubmit={handleSubmit}>
+                <h2>Editar Perfil</h2>
+                <input type="text" name="username" value={userData.username} onChange={handleChange} placeholder="Username" />
+                <input type="text" name="first_name" value={userData.first_name} onChange={handleChange} placeholder="Primeiro Nome" />
+                <input type="text" name="last_name" value={userData.last_name} onChange={handleChange} placeholder="Último Nome" />
+                <input type="email" name="email" value={userData.email} onChange={handleChange} placeholder="Email" />
+                <input type="text" name="telemovel" value={userData.telemovel} onChange={handleChange} placeholder="Telemóvel" />
+                <input type="date" name="nascimento" value={userData.nascimento || ''} onChange={handleChange} placeholder="Nascimento" />
+                <button type="submit">Guardar</button>
+            </form>
+        </div>
+    );
 };
 
 export default EditarPerfil;

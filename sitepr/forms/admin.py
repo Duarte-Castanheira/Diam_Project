@@ -1,26 +1,34 @@
 from django.contrib import admin
-from django.utils.html import format_html
-from .models import Questao, Opcao
+from .models import Questao, Opcao, Formulario
+
+class OpcaoInline(admin.TabularInline):
+    model = Opcao
+    extra = 1
+
+class QuestaoAdmin(admin.ModelAdmin):
+    list_display = ('pk', 'questao_texto', 'pub_data', 'tipo')
+    search_fields = ('pk', 'questao_texto', 'pub_data')
+    list_filter = ('tipo', 'questao_texto', 'pub_data')
+    inlines = [OpcaoInline]
+
+class QuestaoInline(admin.TabularInline):
+    model = Questao
+    extra = 1
+
+class FormularioAdmin(admin.ModelAdmin):
+    list_display = ('pk', 'nome')
+    inlines = [QuestaoInline]
 
 @admin.register(Questao)
-class QuestaoAdmin(admin.ModelAdmin):
-    list_display = ('pk','questao_texto','pub_data')
-    search_fields = ('pk','questao_texto','pub_data')
-    list_filter = ('questao_texto', 'pub_data')
-
-    fieldsets = (
-        ('Informações principais', {
-            'fields': ('questao_texto','pub_data')
-        }),
-    )
+class RegisteredQuestaoAdmin(QuestaoAdmin):
+    pass
 
 @admin.register(Opcao)
-class OpcaoAdmin(admin.ModelAdmin):
-    list_display = ('id', 'questao', 'opcao_texto', 'votos')
-    search_fields = ('id', 'questao', 'opcao_texto', 'votos')
-    list_filter = ('id', 'questao', 'opcao_texto', 'votos')
-    fieldsets = (
-        ('Dados da Estatística', {
-            'fields': ('questao', 'opcao_texto', 'votos')
-        }),
-    )
+class RegisteredOpcaoAdmin(admin.ModelAdmin):
+    list_display = ('pk', 'questao', 'opcao_texto', 'votos')
+    search_fields = ('opcao_texto',)
+    list_filter = ('questao',)
+
+@admin.register(Formulario)
+class RegisteredFormularioAdmin(FormularioAdmin):
+    pass

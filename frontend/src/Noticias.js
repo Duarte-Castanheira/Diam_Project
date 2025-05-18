@@ -18,7 +18,7 @@ function Noticias() {
     };
 
     return (
-        <div>
+        <div style={{backgroundColor:'#f9f7d7'}}>
             <h2>Últimas Notícias</h2>
             {noticiaList.map((noticia, index) => (
                 <article

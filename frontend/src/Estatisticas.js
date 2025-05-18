@@ -9,15 +9,15 @@ function Estatisticas() {
     const [sortDirection, setSortDirection] = useState("desc");
 
     const sortedStats = [...statsList].sort((a, b) => {
-        const aVal = a.stats[sortKey];
-        const bVal = b.stats[sortKey];
+    const aVal = sortKey === "valor_mercado" ? a[sortKey] : a.stats[sortKey];
+    const bVal = sortKey === "valor_mercado" ? b[sortKey] : b.stats[sortKey];
 
-        if (sortDirection === "asc") {
-            return aVal - bVal;
-        } else {
-            return bVal - aVal;
-        }
-    });
+    if (sortDirection === "asc") {
+        return aVal - bVal;
+    } else {
+        return bVal - aVal;
+    }
+});
 
     const handleSort = (key) => {
         if (sortKey === key) {
@@ -44,6 +44,7 @@ function Estatisticas() {
                         <th>Posição</th>
                         <th className="sortable" onClick={() => handleSort("numero_jogos")}>N.º Jogos</th>
                         <th className="sortable" onClick={() => handleSort("golos")}>Golos</th>
+                        <th className="sortable" onClick={() => handleSort("valor_mercado")}>Valor de mercado</th>
                         <th className="sortable" onClick={() => handleSort("assistencias")}>Assistências</th>
                         <th className="sortable" onClick={() => handleSort("cartoes_amarelos")}>Amarelos</th>
                         <th className="sortable" onClick={() => handleSort("cartoes_vermelhos")}>Vermelhos</th>
@@ -56,6 +57,7 @@ function Estatisticas() {
                             <td>{jogador.posicao}</td>
                             <td>{jogador.stats.numero_jogos}</td>
                             <td>{jogador.stats.golos}</td>
+                            <td>{jogador.valor_mercado} m €</td> {/* Aqui está bem agora */}
                             <td>{jogador.stats.assistencias}</td>
                             <td>{jogador.stats.cartoes_amarelos}</td>
                             <td>{jogador.stats.cartoes_vermelhos}</td>

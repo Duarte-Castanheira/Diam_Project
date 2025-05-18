@@ -2,7 +2,6 @@ import './styles.css'
 import React, { useState } from 'react';
 
 function Header() {
-    const [mostrarBotoesForm, setMostrarBotoesForm] = useState(false);
     const [mostrarBotoesEquipa, setMostrarBotoesEquipa] = useState(false);
 
     const toggleBotoesEquipa = (e) => {
@@ -10,10 +9,7 @@ function Header() {
         setMostrarBotoesEquipa(prev => !prev);
     };
 
-    const toggleBotoesForm = (e) => {
-        e.preventDefault();
-        setMostrarBotoesForm(prev => !prev);
-    };
+
 
     return (
         <div className="header">
@@ -38,17 +34,7 @@ function Header() {
                 <a href="/loja">Loja</a>
                 <a href="/noticias">Notícias</a>
                 <a href="/sobre">Sobre</a>
-
-                <div className="nav-item-com-botoes">
-                    <a href="/" onClick={toggleBotoesForm}>Formulários</a>
-                    {mostrarBotoesForm && (
-                        <div className="botoes-container">
-                            <a href="/candidatar">Candidatar</a>
-                            <a href="/inquerito">Inquérito</a>
-                        </div>
-                    )}
-                </div>
-
+                <a href="/candidatar" >Formulários</a>
                 <a href="/carrinho" >
                     <img src="/carrinho.png" alt="Carrinho" style={{ width: '30px', height: 'auto' }} />
                 </a>

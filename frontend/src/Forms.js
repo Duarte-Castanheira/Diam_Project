@@ -1,88 +1,114 @@
 import React, { useEffect, useState } from "react";
-import { Table, Button } from "reactstrap";
 import axios from "axios";
+import "./styles.css";
 
 function Forms() {
-  const [questions, setQuestions] = useState([]);
+    const [questions, setQuestions] = useState([]);
+    const [selectedOptions, setSelectedOptions] = useState({});
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    const USER_URL = 'http://localhost:8000/autenticacao/api/user';
+
+    useEffect(() => {
+        axios.get(USER_URL, { withCredentials: true })
+        .then(res => {
+          setUser(res.data);
+          setLoading(false);
+        })
+        .catch(err => {
+            console.error('Failed to get user:', err);
+            setUser(null);
+            setLoading(false);
+            });
+        }, []);
 
   useEffect(() => {
-    // Vai buscar todas as perguntas
-    axios.get(`http://localhost:8000/forms/api/questions/`)
-      .then(async res => {
-        const questions = res.data;
+    const fetchForm = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8000/forms/api/formulario/`);
+        const form = res.data;  // Ajusta se for array ou object direto
 
-        // Vai buscar as opções para cada pergunta
-        const questionsData = await Promise.all(
-          questions.map(async (q) => {
-            const optionsRes = await axios.get(`http://localhost:8000/forms/api/options/${q.pk}`);
-            return {
-              ...q,
-              options: optionsRes.data
-            };
-          })
-        );
-
-        setQuestions(questionsData);
-      });
-  }, []);
-
-  const vote = async (questionId, optionId) => {
-    const question = questions.find(q => q.pk === questionId);
-    const option = question.options.find(o => o.pk === optionId);
-
-    const updatedOption = {
-      pk: option.pk,
-      questao: question.pk,
-      opcao_texto: option.opcao_texto,
-      votos: option.votos + 1
+        setQuestions(form.questoes || []);
+      } catch (err) {
+        console.error("Erro ao carregar formulário:", err);
+        alert("Erro ao carregar o formulário.");
+      }
     };
 
+    fetchForm();
+  }, []);
+
+  const handleOptionChange = (questionId, optionId) => {
+    setSelectedOptions((prev) => ({
+      ...prev,
+      [questionId]: optionId,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     try {
-      await axios.put(`http://localhost:8000/forms/api/option/${optionId}`, updatedOption);
 
-
-      // Atualiza o estado para refletir o voto
-      setQuestions(prev =>
-        prev.map(q => {
-          if (q.pk === questionId) {
-            return {
-              ...q,
-              options: q.options.map(o =>
-                o.pk === optionId ? { ...o, votos: o.votos + 1 } : o
-              )
-            };
-          }
-          return q;
-        })
-      );
-    } catch (err) {
-      console.error("Erro ao votar:", err.response?.data || err.message);
-      alert("Erro ao votar.");
+      console.log("Respostas enviadas:", selectedOptions);
+      alert("Respostas enviadas com sucesso!");
+      setSelectedOptions({});
+    } catch (error) {
+      console.error("Erro ao enviar respostas:", error);
+      alert("Erro ao enviar respostas.");
     }
   };
 
+    if (!user && !loading) {
+        return (
+            <div className="detalhes-produto">
+            <img src="/perfil_clube.png" alt="Logotipo do clube" className="logo-clube" />
+                <h2>Inicie sessão para aceder ao formulário</h2>
+                <button onClick={() => window.location.href = '/login'}>
+                    Ir para Login
+                </button>
+            </div>
+    );
+  }
+
+
   return (
-    <div className="container mt-4">
-      <h2>Formulário</h2>
-      <p style={{fontFamily:'emoji'}}>
-        Queres entrar com a nossa equipa em campo no próximo jogo? Preenche este formulário e habilita-te a uma experiência inesquecivel
-      </p> <br />
+  <div className="form-container">
+    <h2>Formulário</h2>
+    <p>
+      Queres entrar com a nossa equipa em campo no próximo jogo? Preenche este formulário e habilita-te a uma experiência inesquecível.
+    </p>
+
+    <form onSubmit={handleSubmit} className="formulario">
       {questions.map((q) => (
-        <div key={q.pk} style={{ marginBottom: "40px" }}>
-          <h4>{q.questao_texto}</h4>
-          <ul>
-            {q.options.map((option) => (
-              <li key={option.pk} style={{ marginBottom: "10px" }}>
-                <Button color="success" onClick={() => vote(q.pk, option.pk)}>
-                  {option.opcao_texto}
-                </Button>
-              </li>
-            ))}
-          </ul>
+        <div className="form-group" key={q.pk}>
+          <label className="form-label">{q.questao_texto}</label>
+          {q.opcoes.map((option) => (
+            <div key={option.pk} className="form-check">
+              <input
+                type="radio"
+                id={`q${q.pk}_o${option.pk}`}
+                name={`question_${q.pk}`}
+                value={option.pk}
+                checked={selectedOptions[q.pk] === option.pk}
+                onChange={() => handleOptionChange(q.pk, option.pk)}
+                className="form-check-input"
+                required
+              />
+              <label htmlFor={`q${q.pk}_o${option.pk}`} className="form-check-label">
+                {option.opcao_texto}
+              </label>
+            </div>
+          ))}
         </div>
       ))}
-    </div>
-  );
+      <button type="submit" className="form">
+        Enviar
+      </button>
+    </form>
+  </div>
+);
 }
 
 export default Forms;
