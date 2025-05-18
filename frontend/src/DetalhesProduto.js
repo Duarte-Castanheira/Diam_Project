@@ -9,7 +9,6 @@ function DetalhesProduto() {
   const [loading, setLoading] = useState(true);
   const PRODUTO_URL = `http://localhost:8000/extras/api/produto/${produtoId}/`;
 
-
     function getCSRFToken() {
         return document.cookie.split('; ').find(row => row.startsWith('csrftoken='))?.split('=')[1];
     }
@@ -27,18 +26,12 @@ function DetalhesProduto() {
     }, [PRODUTO_URL]);
 
     const adicionarAoCarrinho = () => {
-  // Pega o carrinho atual do localStorage ou estado
   let carrinhoAtual = JSON.parse(localStorage.getItem('carrinho')) || [];
 
-  // Adiciona o novo produto, garantindo que não há duplicados (se quiseres)
   if (!carrinhoAtual.includes(produto.pk)) {
     carrinhoAtual.push(produto.pk);
   }
-
-  // Atualiza localStorage
   localStorage.setItem('carrinho', JSON.stringify(carrinhoAtual));
-
-  // Envia para o backend o carrinho todo atualizado
   axios.post('http://localhost:8000/autenticacao/api/user/carrinho', {
     carrinho: carrinhoAtual
   }, {

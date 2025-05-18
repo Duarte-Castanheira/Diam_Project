@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 function Carrinho() {
-    const [produtos, setProdutos] = useState([]);
     const [carrinho, setCarrinho] = useState([]);
     const [user, setUser] = useState(null);
 
@@ -15,31 +14,19 @@ function Carrinho() {
     }
 
     useEffect(() => {
-    axios.get(USER_URL, { withCredentials: true })
-        .then(res => {
-            console.log("USER DATA:", res.data);
-            setUser(res.data);
+  axios.get(USER_URL, { withCredentials: true })
+    .then(res => {
+      setUser(res.data);
 
-            const carrinhoIds = (res.data.carrinho || []).map(produto => produto.pk);
-            console.log("Carrinho IDs:", carrinhoIds);
+      const carrinhoIds = (res.data.carrinho || []).map(produto => produto.pk);
 
-            axios.get(PRODUTOS_URL, { withCredentials: true })
-                .then(resProdutos => {
-                    console.log("PRODUTOS DATA:", resProdutos.data);
-
-                    const produtosNoCarrinho = resProdutos.data.filter(p =>
-                        carrinhoIds.includes(p.pk)
-                    );
-                    console.log("PRODUTOS NO CARRINHO:", produtosNoCarrinho);
-
-                    setCarrinho(produtosNoCarrinho);
-                })
-                .catch(err => console.error('Erro ao buscar produtos:', err));
+      axios.get(PRODUTOS_URL, { withCredentials: true })
+        .then(resProdutos => {
+          const produtosNoCarrinho = resProdutos.data.filter(p => carrinhoIds.includes(p.pk));
+          setCarrinho(produtosNoCarrinho);
         })
-        .catch(err => console.error('Erro ao buscar utilizador:', err));
-}, []);
-
-
+    })
+    }, []);
 
     const atualizarCarrinhoNoServidor = (ids) => {
         if (!user) return;
@@ -56,16 +43,15 @@ function Carrinho() {
         .catch(err => console.error("Erro ao atualizar carrinho:", err));
     };
 
-
   const removerDoCarrinho = (produtoId) => {
-  let carrinhoAtual = JSON.parse(localStorage.getItem('carrinho')) || [];
-  carrinhoAtual = carrinhoAtual.filter(id => id !== produtoId);
-  localStorage.setItem('carrinho', JSON.stringify(carrinhoAtual));
-  atualizarCarrinhoNoServidor(carrinhoAtual);
+      const novoCarrinho = carrinho.filter(produto => produto.pk !== produtoId);
 
-  setCarrinho(carrinhoAtual.map(id => produtos.find(p => p.pk === id)).filter(Boolean));
+      const idsCarrinho = novoCarrinho.map(produto => produto.pk);
+      localStorage.setItem('carrinho', JSON.stringify(idsCarrinho));
 
-};
+      atualizarCarrinhoNoServidor(idsCarrinho);
+      setCarrinho(novoCarrinho);
+    };
 
     return (
         <div className="detalhes-produto">

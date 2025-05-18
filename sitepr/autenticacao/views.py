@@ -136,35 +136,48 @@ def update_carrinho(request):
 @permission_classes([IsAuthenticated])
 def update_carrinho_bilhete(request):
     user = request.user
-    print("POST recebido: ", request.data)
-    print("User: ", request.user)
 
     if request.method == 'GET':
         serializer = CustomUserSerializer(user)
         return Response(serializer.data)
 
     elif request.method == 'POST':
-        bilhetes_ids = request.data.get('carrinho', [])
+        bilhetes_ids = request.data.get('carrinho_bilhete', [])
 
         if not isinstance(bilhetes_ids, list):
-            return Response({'error': 'O campo "carrinho" deve ser uma lista de IDs de bilhetes.'}, status=400)
+            return Response({'error': 'O campo "carrinho_bilhete" deve ser uma lista de IDs de bilhetes.'}, status=400)
+
+        user.carrinho_bilhete.clear()
 
         bilhetes = Bilhete.objects.filter(id__in=bilhetes_ids)
+
         for bilhete in bilhetes:
-            user.carrinho.add(bilhete)
+            if bilhete.stock > 0:
+                bilhete.stock -= 1  # Reduz o stock
+                bilhete.save()
+                user.carrinho_bilhete.add(bilhete)  # Adiciona o bilhete ao carrinho
+            else:
+                return Response({'error': f'Stock insuficiente para o bilhete com ID {bilhete.id}.'}, status=400)
+
         user.save()
-        return Response({'success': 'Carrinho atualizado com sucesso.'})
+        return Response({'success': 'Carrinho de bilhetes atualizado com sucesso.'})
 
     elif request.method == 'DELETE':
-        bilhete_id = request.data.get('bilhete_id')
+        bilhete_id = request.data.get('bilhete')
 
         if not bilhete_id:
-            return Response({'error': 'Falta o bilhete_id no pedido.'}, status=400)
+            return Response({'error': 'Falta o parâmetro "bilhete" no pedido.'}, status=400)
 
         try:
             bilhete = Bilhete.objects.get(id=bilhete_id)
         except Bilhete.DoesNotExist:
             return Response({'error': 'Bilhete não encontrado.'}, status=404)
 
-        user.carrinho.remove(bilhete)
-        return Response({'success': 'Bilhete removido do carrinho com sucesso.'})
+        if bilhete in user.carrinho_bilhete.all():
+            user.carrinho_bilhete.remove(bilhete)
+            bilhete.stock += 1
+            bilhete.save()
+            user.save()
+            return Response({'success': 'Bilhete removido do carrinho e stock atualizado com sucesso.'})
+        else:
+            return Response({'error': 'Bilhete não está no carrinho.'}, status=400)
