@@ -2,7 +2,7 @@ import './styles.css';
 
 function PoliticaPrivacidade() {
     return (
-        <div className="DocLegal" >
+        <div className ='sobre-container' >
             <h3>Política de Privacidade</h3>
             <p>Coletamos informações pessoais apenas quando necessário.</p>
             <p>Ao utilizar este site, você concorda com nossa política de privacidade.</p>
