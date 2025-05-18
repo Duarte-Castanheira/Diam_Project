@@ -18,3 +18,28 @@ class Opcao(models.Model):
         return self.opcao_texto
 
 
+
+class Inquerito(models.Model):
+    titulo = models.CharField(max_length=200)
+    descricao = models.TextField(blank=True)
+    criado_em = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.titulo
+
+
+class Pergunta(models.Model):
+    inquerito = models.ForeignKey(Inquerito, on_delete=models.CASCADE, related_name='perguntas')
+    texto_pergunta = models.CharField(max_length=300)
+
+    def __str__(self):
+        return self.texto_pergunta
+
+
+class Resposta(models.Model):
+    pergunta = models.ForeignKey(Pergunta, on_delete=models.CASCADE, related_name='respostas')
+    resposta_texto = models.TextField(blank=True, null=True)
+    respondido_em = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Resposta para: {self.pergunta.texto_pergunta}"

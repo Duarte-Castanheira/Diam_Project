@@ -2,6 +2,12 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
 from .serializers import * # (1)
+from .serializers import InqueritoSerializer
+
+
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Inquerito, Resposta
+
 
 @api_view(['GET', 'POST']) # (2)
 def questions(request):
@@ -76,3 +82,23 @@ def option_detail(request, option_id):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def InqueritoList(request):
+    inqueritos = Inquerito.objects.all()
+    serializer = InqueritoSerializer(inqueritos, many=True)
+    return Response(serializer.data)
+
+def responder_inquerito(request, id_inquerito):
+    inquerito = get_object_or_404(Inquerito, id=id_inquerito)
+    perguntas = inquerito.perguntas.all()
+
+    if request.method == 'POST':
+        for pergunta in perguntas:
+            resposta = request.POST.get(f'pergunta_{pergunta.id}')
+            if resposta:
+                Resposta.objects.create(pergunta=pergunta, resposta_texto=resposta)
+        return redirect('listar_inqueritos')
+
+    return render(request, 'inqueritos/responder_inquerito.html', {'inquerito': inquerito, 'perguntas': perguntas})

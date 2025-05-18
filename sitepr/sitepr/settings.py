@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'extras.apps.ExtrasConfig',
     'autenticacao.apps.AutenticacaoConfig',
     'rest_framework',
-    'corsheaders'
+    'corsheaders',
 ]
 
 MIDDLEWARE = [

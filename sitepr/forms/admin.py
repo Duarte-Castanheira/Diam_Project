@@ -1,6 +1,5 @@
 from django.contrib import admin
-from django.utils.html import format_html
-from .models import Questao, Opcao
+from .models import Questao, Opcao, Inquerito, Pergunta, Resposta
 
 @admin.register(Questao)
 class QuestaoAdmin(admin.ModelAdmin):
@@ -24,3 +23,19 @@ class OpcaoAdmin(admin.ModelAdmin):
             'fields': ('questao', 'opcao_texto', 'votos')
         }),
     )
+
+@admin.register(Inquerito)
+class InqueritoAdmin(admin.ModelAdmin):
+    list_display = ['titulo', 'descricao']
+
+
+
+
+@admin.register(Pergunta)
+class PerguntaAdmin(admin.ModelAdmin):
+    list_display = ['texto_pergunta', 'inquerito']
+
+
+@admin.register(Resposta)
+class RespostaAdmin(admin.ModelAdmin):
+    list_display = ['resposta_texto', 'pergunta', 'respondido_em']
